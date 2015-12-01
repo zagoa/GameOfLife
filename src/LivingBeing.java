@@ -16,6 +16,7 @@ public class LivingBeing {
     private boolean infected = false;
     private boolean isNew = false;
     private boolean dead = false;
+    private boolean healty;
 
     public LivingBeing(Type type,State state, Disease disease) {
     	this.stateEnum=state;
@@ -130,6 +131,10 @@ public class LivingBeing {
 
     public boolean isDead() {
         return dead;
+    }
+    
+    public boolean isHealthy() {
+        return healty;
     }
 
     public void setDead(boolean dead) {
