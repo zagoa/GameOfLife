@@ -88,4 +88,21 @@ public class Field {
 		areHealthy = true;
 		return areHealthy;
 	}
+    
+    @Override
+    public String toString() {
+        String screen = "";
+        for (int i = 0; i < this.height; i++) {
+
+            screen += "\n";
+            screen += "|";
+            for (int j = 0; j < this.height; j++) {
+                if (field[i][j] == null) screen += " NULL ";
+                else screen += field[i][j].toString();
+                if (j + 1 == this.width) screen += "|";
+                else screen += " || ";
+            }
+        }
+        return screen;
+    }
 }
