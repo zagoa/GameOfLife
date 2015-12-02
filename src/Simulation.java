@@ -39,6 +39,25 @@ public class Simulation{
     }
 
 /**
+* @return a random sick animal
+* used to fill the field
+*/
+    public LivingBeing createRandomSickAnimal() {
+        Random rand = new Random();
+        if (rand.nextDouble() < 0.3) {
+            Pig pig  = new Pig(State.SICK);
+            return pig;
+        }
+        else if (rand.nextDouble() < 0.6) {
+            Chicken chicken = new Chicken(State.SICK);
+            return chicken;
+        }
+        else {
+            Duck duck = new Duck(State.SICK);
+            return duck;
+        }
+    }
+/**
 * fill the field with humans
 * TODO : add animals
 */
@@ -50,8 +69,16 @@ public class Simulation{
             for (int i = 0; i < field.getWidth(); i++) {
                 if (rand.nextDouble() <= POPULATION_RATE) {
                     // create a new person and place it on the field
-                    Humans person = new Humans();
-                    field.place(person, i, j);
+                    Random newRandom = new Random();
+
+                    if (newRandom.nextDouble() <= 0.5) {
+                        Humans person = new Humans();
+                        field.place(person, i, j);
+                    }
+                    else {
+                        LivingBeing animal = createRandomSickAnimal();
+                        field.place(animal, i, j);
+                    }
                 }
             }
         }

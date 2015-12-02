@@ -1,8 +1,8 @@
 package oop.flu;
 
 public class Pig extends Animals{
-	public Pig(State state, Disease disease){
-		super(Type.PIG,state,disease);
+	public Pig(State state){
+		super(Type.PIG,state,Disease.H1N1);
 	}
 	
 	public String toString(){
@@ -35,9 +35,6 @@ public class Pig extends Animals{
                 break;
             case H1N1:
                 disease = "H1";
-                break;
-            case H5N1:
-                disease = "H5";
                 break;
         }
 
