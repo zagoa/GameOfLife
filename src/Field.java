@@ -60,10 +60,11 @@ public class Field {
 * @return bool checking if all living being on the field are dead
 */
     public boolean areAllDead() {
-    	this.areDead = false;
-    	for (int j = 0; j < this.height; j++) {
-            for (int i = 0; i < this.width; i++) {
-                if (!field[i][j].isDead()) {
+        this.areDead = false;
+        for (int j = 0; j < this.height; j++) {
+            for (int i = 0; i < this.width; i++){
+                // if there is someone and he is not dead
+                if ((field[i][j] != null) && (!field[i][j].isDead())) {
                     //System.out.println("World is not dead");
                     return areDead;
                 }
@@ -77,19 +78,19 @@ public class Field {
 * @return bool checking if all living beings are healthy on the field
 */
 	public boolean areAllHealthy() {
-		this.areHealthy = false;
-		for (int j = 0; j < this.height; j++) {
-			for (int i = 0; i < this.width; i++) {
-				if (!field[width][height].isHealthy()) {
-					return areHealthy;
-				}
-			}
-		}
-		areHealthy = true;
-		return areHealthy;
-	}
+        this.areHealthy = false;
+        for (int j = 0; j < this.height; j++) {
+            for (int i = 0; i < this.width; i++) {
+                if ((field[i][j] != null) && (!field[i][j].isHealthy())) {
+                    return areHealthy;
+                }
+            }
+        }
+        areHealthy = true;
+        return areHealthy;
+    }
     
-    @Override
+/*    @Override
     public String toString() {
         String screen = "";
         for (int i = 0; i < this.height; i++) {
@@ -104,5 +105,20 @@ public class Field {
             }
         }
         return screen;
+    }*/
+    @Override
+    public String toString() {
+        String result = "";
+        for (int j = 0; j < this.height; j++) {
+            result += "\n";
+            result += "|| ";
+            for (int i = 0; i < this.width; i++) {
+                if (field[i][j] == null) result += "  NULL ";
+                else result += field[i][j].toString();
+                if (i+1 == this.width) result += " ||";
+                else result += " | ";
+            }
+        }
+        return result;
     }
 }

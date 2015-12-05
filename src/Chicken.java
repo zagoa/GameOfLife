@@ -2,8 +2,8 @@ package oop.flu;
 
 public class Chicken extends Birds{
 
-	public Chicken(State state) {
-		super(Type.CHICKEN,state);
+	public Chicken(State state, int time) {
+		super(Type.CHICKEN,state, time);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -9,24 +9,26 @@ public class LivingBeing {
     private Disease[] allDisease = {Disease.NONE, Disease.H1N1, Disease.H5N1};
     private Type[] allType = {Type.HUMAN, Type.PIG, Type.DUCK, Type.CHICKEN};
     protected State stateEnum;
-    private String state;
+    protected String state;
     protected Disease diseaseEnum;
     private String disease;
     private int time;
     private boolean infected = false;
     private boolean isNew = false;
     private boolean dead = false;
-    private boolean healty;
+    private boolean healthy;
 
-    public LivingBeing(Type type,State state, Disease disease) {
+    // boolean needed to run simulation
+    protected boolean mayChangeState;
+
+    public LivingBeing(Type type,State state, Disease disease, int time) {
     	this.stateEnum=state;
         this.state = state.toString();
         this.diseaseEnum = disease;
         this.disease=disease.toString();
         this.type = type;
-        
-
-
+        this.time = time;
+        this.mayChangeState = true;
     }
 
     //@Override
@@ -134,10 +136,24 @@ public class LivingBeing {
     }
     
     public boolean isHealthy() {
-        return healty;
+        return healthy;
     }
 
     public void setDead(boolean dead) {
         this.dead = dead;
     }
+
+    public void setHealthy(boolean healthy) {
+        this.healthy = healthy;
+    }
+
+    public boolean mayChangeState() {
+        return mayChangeState;
+    }
+
+    public void setChangeable(boolean changeable) {
+        this.mayChangeState = changeable;
+    }
+
+    public void changeState(){}
 }

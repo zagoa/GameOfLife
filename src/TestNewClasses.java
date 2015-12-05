@@ -11,6 +11,16 @@ public class TestNewClasses {
         System.out.println("Height = " + simul.getField().getHeight());
         // show the field
         System.out.println(simul.getField().toString());
-
+        
+        // test one step
+        simul.simulateOneStep();
+        System.out.println(simul.getField().toString());
+        // Humans person = new Humans();
+        // person.changeState();
+        // System.out.println(person.toString());
+        System.out.println("Are they all dead? : " + simul.getField().areAllDead());
+        System.out.println("Are they all healthy? : " + simul.getField().areAllHealthy());
+        
+        //simul.run();
     }
 }
