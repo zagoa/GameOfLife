@@ -38,7 +38,9 @@ public class Field {
     	}
     }
 
-/**
+    public void remove(int width, int height){ field[width][height] = null;}
+
+    /**
 * @param LB to be placed
 * @param width where to place LB
 * @param height where to place LB

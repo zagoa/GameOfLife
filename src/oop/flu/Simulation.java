@@ -183,7 +183,22 @@ public class Simulation{
         }
     }
 
-/**
+    public boolean attemptMove(LivingBeing person, int currentX, int currentY, int adjacentX, int adjacentY){
+        if(indexGood(adjacentX,adjacentY,field) && field.getLivingBeing(adjacentX,adjacentY)==null){
+            Random r=new Random();
+            if(r.nextDouble()>0.7){
+                System.out.println("Movement");
+                field.remove(currentX,currentY);
+                field.place(person,adjacentX,adjacentY);
+                return true;
+            }
+            return false;
+        }
+        return false;
+
+    }
+
+    /**
 * run one step of simulation
 */
     public void simulateOneStep() {
@@ -217,6 +232,15 @@ public class Simulation{
                         field.getLivingBeing(i, j+1).changeState();
                         field.getLivingBeing(i, j+1).setChangeable(false);
                     }
+                }
+                if((field.getLivingBeing(i,j) != null) && field.getLivingBeing(i,j) instanceof Humans && field.getLivingBeing(i,j).getState()!=State.DEAD){
+                    LivingBeing movingPerson=field.getLivingBeing(i,j);
+                    boolean moved=false;
+                    if(!moved)moved=attemptMove(movingPerson,i,j,i+1,j);
+                    if(!moved)moved=attemptMove(movingPerson,i,j,i-1,j);
+                    if(!moved)moved=attemptMove(movingPerson,i,j,i,j-1);
+                    if(!moved)attemptMove(movingPerson,i,j,i,j+1);
+
                 }
             }
         }
