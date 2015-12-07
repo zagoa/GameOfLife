@@ -1,5 +1,10 @@
 package oop.flu;
 
+/**
+* A class describing a field of simulation
+* @version 2015.12.07
+* @author Liavona Zheltanosava
+*/
 public class Field {
 	// The depth and width of the field.
     private int height, width;
@@ -7,11 +12,14 @@ public class Field {
     // Storage for population
     private LivingBeing[][] field;
 
+    // indicators of wether everyone is dead or alive
     private boolean areDead;
     private boolean areHealthy;
 
 /**
-* contructor
+* default contructor
+* @param height height of the field
+* @param width width of the field
 */
     public Field(int height, int width) {
     	this.height = height;
@@ -31,7 +39,9 @@ public class Field {
     }
 
 /**
-* @param lb to be placed
+* @param LB to be placed
+* @param width where to place LB
+* @param height where to place LB
 */
     public void place(LivingBeing lb, int width, int height) {
     	field[width][height] = lb;
@@ -56,8 +66,9 @@ public class Field {
     public int getHeight() {
     	return height;
     }
+
 /**
-* @return bool checking if all living being on the field are dead
+* @return wether all LB on the field are dead
 */
     public boolean areAllDead() {
         this.areDead = false;
@@ -75,7 +86,7 @@ public class Field {
         return areDead;
     }
 /**
-* @return bool checking if all living beings are healthy on the field
+* @return wether all LB on the field are healthy
 */
 	public boolean areAllHealthy() {
         this.areHealthy = false;
@@ -90,22 +101,9 @@ public class Field {
         return areHealthy;
     }
     
-/*    @Override
-    public String toString() {
-        String screen = "";
-        for (int i = 0; i < this.height; i++) {
-
-            screen += "\n";
-            screen += "|";
-            for (int j = 0; j < this.height; j++) {
-                if (field[i][j] == null) screen += " NULL ";
-                else screen += field[i][j].toString();
-                if (j + 1 == this.width) screen += "|";
-                else screen += " || ";
-            }
-        }
-        return screen;
-    }*/
+/**
+* toString method
+*/
     @Override
     public String toString() {
         String result = "";
@@ -122,6 +120,7 @@ public class Field {
         return result;
     }
 
+// TODO : comments
     public Object getObjectAt(int row, int col) {
         return field[row][col];
     }

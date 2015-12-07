@@ -2,23 +2,43 @@ package oop.flu;
 
 import java.util.Random;
 
+/**
+* A class representing common characteristics of humans
+* @version 2015.12.07
+*/
 public class Humans extends LivingBeing {
+    /**
+    * default constructor
+    * human is healthy
+    */
 	public Humans(){
 		super(Type.HUMAN,State.HEALTHY,Disease.NONE, 0);
 	}
+
+    /**
+    * constructor
+    * @param state human's state (healthy, sick, etc.)
+    * @param disease current disease
+    * @param time /to specify/
+    */
 	public Humans(State state, Disease disease, int time){
 		super(Type.HUMAN,state,disease, time);
 	}
 
+    /**
+    * change the current human's state
+    */
     @Override
     public void changeState() {
         if (mayChangeState == false) return;
         if (stateEnum.equals(State.HEALTHY)) {
-            System.out.println("He is healthy");
+            // System.out.println("He is healthy");
             setState(State.SICK);
         }
         else if (stateEnum.equals(State.SICK)) setState(State.CONTAGIOUS);
         else if (stateEnum.equals(State.CONTAGIOUS)) {
+            // TODO : faire un random correct
+            // TODO : mettre le pourcentage dans une constante
             Random rand = new Random();
             int randomNumber;
             randomNumber = rand.nextInt(101);
@@ -35,10 +55,13 @@ public class Humans extends LivingBeing {
             }
         }
     }
-	
+
+/**
+* toString method
+*/
 	public String toString(){
 		String screen;
-        String type="",state="",disease ="";
+        String type = "", state = "", disease = "";
         type = "Hu";
         switch (this.stateEnum) {
             case SICK:
@@ -72,7 +95,7 @@ public class Humans extends LivingBeing {
                 break;
         }
 
-        screen = ""+type+" "+state+" "+disease;
+        screen = "" + type + " " + state + " " + disease;
         return screen;
 	}
 

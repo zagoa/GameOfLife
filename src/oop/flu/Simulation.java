@@ -4,14 +4,17 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
+/**
+* A class describing a simulation
+* @version 2015.12.07
+* @author Liavona Zheltanosava
+*/
 public class Simulation{
 
-	// les parametres par defaut
+	// default parameters
 	private static final int DEFAULT_WIDTH = 25;
     private static final int DEFAULT_HEIGHT = 25;
-    // rempli la moitie de champ
     private static final double POPULATION_RATE = 0.5;
-    // neighbourhood par defaut
     private static final Neighbourhood DEFAULT_NEIGHBOURHOOD = Neighbourhood.FOUR_N;
 
     private int width;
@@ -22,16 +25,20 @@ public class Simulation{
     private List<LivingBeing> animals;
     private int step;
 
-
-
-
     private Neighbourhood neighbourhood;
 
-// constructeur par defaut
+/**
+* default constructor
+*/
     public Simulation() {
     	this(DEFAULT_WIDTH, DEFAULT_HEIGHT, POPULATION_RATE);
     }
-
+/**
+* constructor of simulation
+* @param width Width of the field
+* @param heigth Height of the field
+* @param populationRate Percentage of the field to be filled
+*/
     public Simulation (int width, int heigth, double populationRate) {
     // si les valeurs sont negatives on les remet par defaut
     	if (width <= 0 || heigth <= 0) {
@@ -96,9 +103,8 @@ public class Simulation{
     }
 
 
-    /**
-* @return a random sick animal
-* used to fill the field
+/**
+* @return a random contagious animal
 */
     public LivingBeing createRandomSickAnimal() {
         Random rand = new Random();
@@ -116,8 +122,8 @@ public class Simulation{
         }
     }
 /**
-* fill the field with humans
-* TODO : add animals
+* fill the field with humans and animals
+* @param populationRate Percentage of the field to be filled
 */
     public void fillField (double populationRate) {
         Random rand = new Random();
@@ -143,19 +149,32 @@ public class Simulation{
             }
         }
     }
+
+/**
+* @return the field
+*/
     public Field getField() {
         return field;
     }
 
+/**
+* @return the population rate
+*/
     public double getPopulationRate() {
         return populationRate;
     }
 
+/**
+* @return the type of neighbourhood
+*/
     public Neighbourhood getNeighbourhood() {
         return neighbourhood;
     }
 
-    //reinitialize changeable state of everybody on the field
+/**
+* reset changeable state of everybody on the field
+* used to change state of LB only once dring one step of simulation
+*/
     public void reset() {
         for (int j = 0; j < field.getHeight(); j++) {
             for (int i = 0; i < field.getWidth(); i++) {
@@ -164,7 +183,9 @@ public class Simulation{
         }
     }
 
-// TODO
+/**
+* run one step of simulation
+*/
     public void simulateOneStep() {
         System.out.println("In simulateOneStep");
         step++;
@@ -208,6 +229,10 @@ public class Simulation{
         }
     }
 
+/**
+* run the simulation
+* @throws exception /to specify/
+*/
     public void run() throws InterruptedException {
         while(!field.areAllDead() || !field.areAllHealthy()) {
             simulateOneStep();
@@ -221,7 +246,9 @@ public class Simulation{
         }
     }
 
-    // check indexes to avoid NullPointerException
+/**
+* check indexes to avoid NullPointerException while running the simulation
+*/
     public boolean indexGood(int i, int j, Field field) {
         if (0 <= i && i < field.getWidth() && 0 <= j && j < field.getHeight() ) return true;
         return false;

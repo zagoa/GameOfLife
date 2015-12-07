@@ -1,13 +1,27 @@
 package oop.flu;
 
+/**
+* A class representing a pig
+* @version 2015.12.07
+*/
 public class Pig extends Animals{
+
+    /**
+    * default constructor
+    * defaut type PIG
+    * @param state its state (healthy, sick, etc.)
+    * @param time /to specify/
+    */
 	public Pig(State state, int time){
 		super(Type.PIG,state,Disease.H1N1, time);
 	}
 	
+    /**
+    * toString method
+    */
 	public String toString(){
 		String screen;
-        String type="",state="",disease ="";
+        String type = "", state = "", disease = "";
         type = "Pi";
         switch (this.stateEnum) {
             case SICK:
@@ -38,7 +52,7 @@ public class Pig extends Animals{
                 break;
         }
 
-        screen = ""+type+" "+state+" "+disease;
+        screen = "" + type + " " + state + " " + disease;
         return screen;
 	}
 }
