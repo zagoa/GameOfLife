@@ -21,6 +21,6 @@ public class TestNewClasses {
         System.out.println("Are they all dead? : " + simul.getField().areAllDead());
         System.out.println("Are they all healthy? : " + simul.getField().areAllHealthy());
         
-        //simul.run();
+        simul.run();
     }
 }
