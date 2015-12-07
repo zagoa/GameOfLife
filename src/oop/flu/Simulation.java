@@ -1,6 +1,8 @@
 package oop.flu;
 
-import java.util.Random;
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class Simulation{
 
@@ -16,6 +18,12 @@ public class Simulation{
     private int heigth;
     private double populationRate;
     private Field field;
+    private List<SimulatorView> views;
+    private List<LivingBeing> animals;
+    private int step;
+
+
+
 
     private Neighbourhood neighbourhood;
 
@@ -40,9 +48,55 @@ public class Simulation{
         }
 
         field = new Field(width, heigth);
+        animals = new ArrayList<>();
+        views = new ArrayList<>();
+
+        SimulatorView view = new GridView(width, heigth);
+        //HEALTHY
+        view.setColor(Humans.class,State.HEALTHY, Color.BLUE);
+        view.setColor(Chicken.class,State.HEALTHY, Color.ORANGE);
+        view.setColor(Pig.class,State.HEALTHY, Color.PINK);
+        view.setColor(Duck.class,State.HEALTHY, Color.GREEN);
+
+        //SICK
+
+        view.setColor(Humans.class,State.SICK, Color.RED);
+        view.setColor(Chicken.class,State.SICK, Color.RED);
+        view.setColor(Pig.class,State.SICK, Color.RED);
+        view.setColor(Duck.class,State.SICK, Color.RED);
+
+        //CONTAGIOUS
+        view.setColor(Humans.class,State.CONTAGIOUS, Color.BLACK);
+        view.setColor(Chicken.class,State.CONTAGIOUS, Color.BLACK);
+        view.setColor(Pig.class,State.CONTAGIOUS, Color.BLACK);
+        view.setColor(Duck.class,State.CONTAGIOUS, Color.BLACK);
+
+        //DEAD
+        view.setColor(Humans.class,State.DEAD, Color.MAGENTA);
+        view.setColor(Chicken.class,State.DEAD, Color.MAGENTA);
+        view.setColor(Pig.class,State.DEAD, Color.MAGENTA);
+        view.setColor(Duck.class,State.DEAD, Color.MAGENTA);
+
+        //RECOVERING
+        view.setColor(Humans.class,State.RECOVERING, Color.CYAN);
+        view.setColor(Chicken.class,State.RECOVERING, Color.CYAN);
+        view.setColor(Pig.class,State.RECOVERING, Color.CYAN);
+        view.setColor(Duck.class,State.RECOVERING, Color.CYAN);
+
+        //IMMUNITY
+        view.setColor(Humans.class,State.IMUN, Color.CYAN);
+        view.setColor(Chicken.class,State.IMUN, Color.CYAN);
+        view.setColor(Pig.class,State.IMUN, Color.CYAN);
+        view.setColor(Duck.class,State.IMUN, Color.CYAN);
+
+        views.add(view);
+
+        // Setup a valid starting point.
+        // reset();
     }
 
-/**
+
+    /**
 * @return a random sick animal
 * used to fill the field
 */
@@ -77,10 +131,12 @@ public class Simulation{
 
                     if (newRandom.nextDouble() <= 0.5) {
                         Humans person = new Humans();
+                        animals.add(person);
                         field.place(person, i, j);
                     }
                     else {
                         LivingBeing animal = createRandomSickAnimal();
+                        animals.add(animal);
                         field.place(animal, i, j);
                     }
                 }
@@ -111,7 +167,7 @@ public class Simulation{
 // TODO
     public void simulateOneStep() {
         System.out.println("In simulateOneStep");
-
+        step++;
         reset();
         // temporary field - a copy of a current field to compare while doing next step
         Field tmp = this.field;
@@ -143,12 +199,25 @@ public class Simulation{
                 }
             }
         }
+    updateViews();
     }
 
-    public void run() {
+    private void updateViews() {
+        for (SimulatorView view : views) {
+            view.showStatus(step, field);
+        }
+    }
+
+    public void run() throws InterruptedException {
         while(!field.areAllDead() || !field.areAllHealthy()) {
             simulateOneStep();
             System.out.println(field.toString());
+            try{
+                Thread.sleep(2000);
+                //this.wait(1000);
+            }catch(Exception e){
+                System.out.println("Probleme");
+            }
         }
     }
 

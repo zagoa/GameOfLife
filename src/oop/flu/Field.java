@@ -121,4 +121,11 @@ public class Field {
         }
         return result;
     }
+
+    public Object getObjectAt(int row, int col) {
+        return field[row][col];
+    }
+    public LivingBeing getCreatureAt(int row, int col) {
+        return (LivingBeing)field[row][col];
+    }
 }
