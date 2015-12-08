@@ -9,9 +9,10 @@ package oop.flu;
 public class LivingBeing {
     // type of living being
     protected final Type type;
-    private State[] allState = {State.HEALTHY, State.SICK, State.CONTAGIOUS, State.RECOVERING, State.DEAD,State.IMUN};
-    private Disease[] allDisease = {Disease.NONE, Disease.H1N1, Disease.H5N1};
-    private Type[] allType = {Type.HUMAN, Type.PIG, Type.DUCK, Type.CHICKEN};
+    // inutile
+//    private State[] allState = {State.HEALTHY, State.SICK, State.CONTAGIOUS, State.RECOVERING, State.DEAD,State.IMUN};
+//    private Disease[] allDisease = {Disease.NONE, Disease.H1N1, Disease.H5N1};
+//    private Type[] allType = {Type.HUMAN, Type.PIG, Type.DUCK, Type.CHICKEN};
     // state of living being
     protected State stateEnum;
     protected String state;

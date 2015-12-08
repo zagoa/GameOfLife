@@ -37,7 +37,11 @@ public class Field {
     		}
     	}
     }
-
+/**
+* remove LB from field[width][height]
+* @param width where to remove LB from
+* @param height where to remove LB from
+*/
     public void remove(int width, int height){ field[width][height] = null;}
 
     /**

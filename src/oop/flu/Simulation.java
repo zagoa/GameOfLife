@@ -182,10 +182,18 @@ public class Simulation{
             }
         }
     }
-
+/**
+* deplace a LB
+* @param person a LB to be deplaced
+* @param currentX its current X position
+* @param currentY its current Y position
+* @param adjacentX its future X position
+* @param adjacentY its future Y position
+* @return wether LB was deplaced
+*/
     public boolean attemptMove(LivingBeing person, int currentX, int currentY, int adjacentX, int adjacentY){
         if(indexGood(adjacentX,adjacentY,field) && field.getLivingBeing(adjacentX,adjacentY)==null){
-            Random r=new Random();
+            Random r = new Random();
             if(r.nextDouble()>0.7){
                 System.out.println("Movement");
                 field.remove(currentX,currentY);
@@ -204,6 +212,7 @@ public class Simulation{
     public void simulateOneStep() {
         System.out.println("In simulateOneStep");
         step++;
+        // reset all LB of the field to change their states only one time
         reset();
         // temporary field - a copy of a current field to compare while doing next step
         Field tmp = this.field;
@@ -233,6 +242,7 @@ public class Simulation{
                         field.getLivingBeing(i, j+1).setChangeable(false);
                     }
                 }
+                // if there is a human and he is not dead, he can deplace on the field
                 if((field.getLivingBeing(i,j) != null) && field.getLivingBeing(i,j) instanceof Humans && field.getLivingBeing(i,j).getState()!=State.DEAD){
                     LivingBeing movingPerson=field.getLivingBeing(i,j);
                     boolean moved=false;
