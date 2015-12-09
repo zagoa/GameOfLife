@@ -21,7 +21,7 @@ public class Field {
 * @param height height of the field
 * @param width width of the field
 */
-    public Field(int height, int width) {
+    public Field(int width, int height) {
     	this.height = height;
     	this.width = width;
     	field = new LivingBeing[width][height];
