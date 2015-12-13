@@ -34,9 +34,10 @@ public class Humans extends LivingBeing {
         if (stateEnum.equals(State.HEALTHY)) {
             // System.out.println("He is healthy");
             setState(State.SICK);
+
         }
-        else if (stateEnum.equals(State.SICK)) setState(State.CONTAGIOUS);
-        else if (stateEnum.equals(State.CONTAGIOUS)) {
+        else if (stateEnum.equals(State.SICK) && (getTime()>2)) setState(State.CONTAGIOUS);
+        else if (stateEnum.equals(State.CONTAGIOUS) && (getTime()>4)) {
             // TODO : faire un random correct
             // TODO : mettre le pourcentage dans une constante
             Random rand = new Random();
@@ -44,7 +45,7 @@ public class Humans extends LivingBeing {
             randomNumber = rand.nextInt(101);
             // juste pour tester
             // il faudra le mettre en constante
-            int percentage = 42;
+            int percentage = 80; //taux de mort de la maladie
             if (randomNumber >= percentage) {
                 setState(State.DEAD);
                 setDead(true);
