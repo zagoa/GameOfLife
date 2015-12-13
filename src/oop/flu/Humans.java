@@ -47,6 +47,7 @@ public class Humans extends LivingBeing {
             // il faudra le mettre en constante
             int percentage = 80; //taux de mort de la maladie
             if (randomNumber >= percentage) {
+            //if (randomNumber <= percentage) {
                 setState(State.DEAD);
                 setDead(true);
             } 

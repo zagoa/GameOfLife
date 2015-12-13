@@ -24,7 +24,7 @@ public abstract class Animals extends LivingBeing {
     * change the current state of an animal
     */
     @Override
-	public void changeState() {
+    public void changeState() {
         if (mayChangeState == false) return;
         if (stateEnum.equals(State.HEALTHY)) setState(State.SICK);
         else if (stateEnum.equals(State.SICK) && getTime()>2) setState(State.CONTAGIOUS);
@@ -33,6 +33,7 @@ public abstract class Animals extends LivingBeing {
             Random rand = new Random();
             int randomNumber;
             randomNumber = (int) (Math.random() * (100));
+            // if (randomNumber <= MORTALITY_RATE) {
             if (randomNumber >= MORTALITY_RATE) {
                 setState(State.DEAD);
                 setDead(true);
