@@ -236,7 +236,12 @@ public class Simulation{
 
     }
 
-
+/**
+* check if disease can be transmitted from one LB to another
+* @param sick A sick living being
+* @param neighbour A neighbour of sick LB
+* @return wether disease can be ransmitted
+*/
     public boolean checkCompatibility(LivingBeing sick, LivingBeing neighbour){
         if(sick.getDiseaseEnum()==null) return false;
         if(neighbour.getState()==State.IMUN || neighbour.getState()==State.DEAD) return false; //Si le voisin est immunisé, il ne peut pas être contaminé
@@ -248,6 +253,12 @@ public class Simulation{
         return false;
     }
 
+/**
+* transmit disease 
+* @param sick A sick living being
+* @param neighbourI Neighbour width position
+* @param neighbourJ Neighbour heght posiion
+*/
     public void affectNeighbour(LivingBeing sick,int neighbourI,int neighbourJ){
         if (indexGood(neighbourI, neighbourJ, field) && (field.getLivingBeing(neighbourI, neighbourJ) != null)  && field.getLivingBeing(neighbourI, neighbourJ).mayChangeState()) {
             LivingBeing neighbour=field.getLivingBeing(neighbourI, neighbourJ);
@@ -257,12 +268,11 @@ public class Simulation{
             }
         }
     }
-    /**
+
+/**
 * run one step of simulation
 */
     public void simulateOneStep() {
-        // System.out.println("In simulateOneStep");
-        removeDeadBeings();
         step++;
         // reset all LB of the field to change their states only one time
         reset();
@@ -272,13 +282,12 @@ public class Simulation{
             for (int i = 0; i < field.getWidth(); i++) {
 
                 //If a being is dead, he's removed from the field
-                if (tmp.getLivingBeing(i, j) != null && (tmp.getLivingBeing(i, j).getState().equals(State.DEAD))){
+                if (tmp.getLivingBeing(i, j) != null && (tmp.getLivingBeing(i, j).isDead())) {
                     field.remove(i,j);
                 }
                 // si il y a qqn qui est malade et peut transmettre la maladie
                 if ((tmp.getLivingBeing(i, j) != null) && (tmp.getLivingBeing(i, j).getState().equals(State.CONTAGIOUS))) {
-                    LivingBeing sick=field.getLivingBeing(i,j);
-                    // System.out.println("i = " + i + " j = " + j + " is CONTAGIOUS");
+                    LivingBeing sick = field.getLivingBeing(i,j);
                     // change state of neighbours
                     affectNeighbour(sick,i+1,j);
                     affectNeighbour(sick,i-1,j);
@@ -293,7 +302,6 @@ public class Simulation{
                     if(!moved)moved=attemptMove(movingPerson,i,j,i-1,j);
                     if(!moved)moved=attemptMove(movingPerson,i,j,i,j-1);
                     if(!moved)attemptMove(movingPerson,i,j,i,j+1);
-
                 }
             }
         }
