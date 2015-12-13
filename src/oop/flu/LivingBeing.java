@@ -11,14 +11,14 @@ public class LivingBeing {
     protected final Type type;
     // inutile
 //    private State[] allState = {State.HEALTHY, State.SICK, State.CONTAGIOUS, State.RECOVERING, State.DEAD,State.IMUN};
-//    private Disease[] allDisease = {Disease.NONE, Disease.H1N1, Disease.H5N1};
+//    private DiseaseEnum[] allDisease = {DiseaseEnum.NONE, DiseaseEnum.H1N1, DiseaseEnum.H5N1};
 //    private Type[] allType = {Type.HUMAN, Type.PIG, Type.DUCK, Type.CHICKEN};
     // state of living being
     protected State stateEnum;
     protected String state;
     // disease of living being
-    protected Disease diseaseEnum;
-    private String disease;
+    protected DiseaseEnum diseaseEnum;
+    protected Disease disease;
     private int time;
     // wether it is infected
     private boolean infected = false;
@@ -38,11 +38,10 @@ public class LivingBeing {
     * @param disease current disease
     * @param time /to specify/
     */
-    public LivingBeing(Type type, State state, Disease disease, int time) {
+    public LivingBeing(Type type, State state, DiseaseEnum disease, int time) {
     	this.stateEnum = state;
         this.state = state.toString();
         this.diseaseEnum = disease;
-        this.disease = disease.toString();
         this.type = type;
         this.time = time;
         this.mayChangeState = true;
@@ -122,12 +121,12 @@ public class LivingBeing {
 /**
 * @return current disease
 */
-    public Disease getDisease() {
+    public DiseaseEnum getDiseaseEnum() {
         return diseaseEnum;
     }
 
 /**
-* @return current state
+* changes the being's current state
 */
     public void setState(State state) {
         this.stateEnum = state;
@@ -138,11 +137,20 @@ public class LivingBeing {
 * @param disease a disease to be set
 */
     public void setDisease(Disease disease) {
-        this.diseaseEnum = disease;
+        this.disease =disease;
+
+        //this.diseaseEnum = disease;
         //this.disease=this.diseaseEnum.toString();
     }
+    public void cureDisease(){
+        this.disease=null;
+    }
+
+    public Disease getDisease(){
+        return disease;
+    }
 /**
-* @param time a time to be set
+* @param timeSpend a time to be set
 */
     public void setTime(int timeSpend) {
         this.time = timeSpend;
@@ -210,5 +218,6 @@ public class LivingBeing {
         this.mayChangeState = changeable;
     }
 
-    public void changeState(){}
+    public void changeState(Disease disease){}
+    public Type getType(){return null; }
 }

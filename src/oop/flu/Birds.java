@@ -14,8 +14,12 @@ public abstract class Birds extends Animals{
     * by default disease is set to H5N1
     */
 	public Birds(Type type, State state, int time) {
-		super(type,state,Disease.H5N1, time);
+		super(type,state, DiseaseEnum.H5N1, time);
 		// TODO Auto-generated constructor stub
+	}
+
+	public void setDisease(){
+		disease =new Disease(DiseaseEnum.H5N1);
 	}
 
 }

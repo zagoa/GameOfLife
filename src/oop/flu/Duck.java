@@ -56,4 +56,8 @@ public class Duck extends Birds {
         screen = "" + type + " " + state + " " + disease;
         return screen;
 	}
+
+    public Type getType(){
+        return Type.DUCK;
+    }
 }

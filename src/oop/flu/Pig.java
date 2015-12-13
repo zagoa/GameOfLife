@@ -13,7 +13,7 @@ public class Pig extends Animals{
     * @param time /to specify/
     */
 	public Pig(State state, int time){
-		super(Type.PIG,state,Disease.H1N1, time);
+		super(Type.PIG,state, DiseaseEnum.H1N1, time);
 	}
 	
     /**
@@ -55,4 +55,11 @@ public class Pig extends Animals{
         screen = "" + type + " " + state + " " + disease;
         return screen;
 	}
+
+    public void setDisease(){
+        disease =new Disease(DiseaseEnum.H1N1);
+    }
+    public Type getType(){
+        return Type.PIG;
+    }
 }

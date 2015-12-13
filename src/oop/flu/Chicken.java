@@ -56,4 +56,7 @@ public class Chicken extends Birds{
         screen = "" + type + " " + state + " " + disease;
         return screen;
 	}
+    public Type getType(){
+        return Type.CHICKEN;
+    }
 }

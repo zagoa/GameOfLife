@@ -16,28 +16,31 @@ public abstract class Animals extends LivingBeing {
     * @param disease current disease
     * @param time /to specify/
     */
-	public Animals(Type type, State state, Disease disease, int time){
+	public Animals(Type type, State state, DiseaseEnum disease, int time){
 		super(type,state,disease,time);
 	}
 
     /**
     * change the current state of an animal
     */
+
     @Override
-    public void changeState() {
+    public void changeState(Disease disease) {
         if (mayChangeState == false) return;
-        if (stateEnum.equals(State.HEALTHY)) setState(State.SICK);
-        else if (stateEnum.equals(State.SICK) && getTime()>2) setState(State.CONTAGIOUS);
-        else if (stateEnum.equals(State.CONTAGIOUS) && getTime()>4) {
+        if (stateEnum.equals(State.HEALTHY)) {
+            setState(State.SICK);
+            setDisease(disease);
+        }
+        else if (stateEnum.equals(State.SICK) && getTime()>disease.getContagiousTime()) setState(State.CONTAGIOUS);
+        else if (stateEnum.equals(State.CONTAGIOUS) && getTime()>disease.getRecoveryTime()) {
             // generate a random integer between 0 and 100
             Random rand = new Random();
             int randomNumber;
             randomNumber = (int) (Math.random() * (100));
-            // if (randomNumber <= MORTALITY_RATE) {
-            if (randomNumber >= MORTALITY_RATE) {
+            if (randomNumber >= disease.getDeathRate()) {
                 setState(State.DEAD);
                 setDead(true);
-            } 
+            }
         }
     }
 }

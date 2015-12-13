@@ -12,7 +12,7 @@ public class Humans extends LivingBeing {
     * human is healthy
     */
 	public Humans(){
-		super(Type.HUMAN,State.HEALTHY,Disease.NONE, 0);
+		super(Type.HUMAN,State.HEALTHY, DiseaseEnum.NONE, 0);
 	}
 
     /**
@@ -21,7 +21,7 @@ public class Humans extends LivingBeing {
     * @param disease current disease
     * @param time /to specify/
     */
-	public Humans(State state, Disease disease, int time){
+	public Humans(State state, DiseaseEnum disease, int time){
 		super(Type.HUMAN,state,disease, time);
 	}
 
@@ -29,15 +29,17 @@ public class Humans extends LivingBeing {
     * change the current human's state
     */
     @Override
-    public void changeState() {
+    public void changeState(Disease disease) {
         if (mayChangeState == false) return;
         if (stateEnum.equals(State.HEALTHY)) {
-            // System.out.println("He is healthy");
             setState(State.SICK);
-
+            setDisease(disease);
         }
-        else if (stateEnum.equals(State.SICK) && (getTime()>2)) setState(State.CONTAGIOUS);
-        else if (stateEnum.equals(State.CONTAGIOUS) && (getTime()>4)) {
+
+        else if (stateEnum.equals(State.SICK) && (getTime()>disease.getContagiousTime())) {
+            setState(State.CONTAGIOUS);
+        }
+        else if (stateEnum.equals(State.CONTAGIOUS) && (getTime()>disease.getRecoveryTime())) {
             // TODO : faire un random correct
             // TODO : mettre le pourcentage dans une constante
             Random rand = new Random();
@@ -46,17 +48,25 @@ public class Humans extends LivingBeing {
             // juste pour tester
             // il faudra le mettre en constante
             int percentage = 80; //taux de mort de la maladie
-            if (randomNumber >= percentage) {
-            //if (randomNumber <= percentage) {
+            if (randomNumber >= disease.getDeathRate()) {
                 setState(State.DEAD);
                 setDead(true);
-            } 
+            }
             else {
                 setState(State.IMUN);
+                cureDisease();
                 setHealthy(true);
             }
+
         }
+
+
     }
+    public void setDisease(Disease disease){
+        diseaseEnum=disease.getName();
+        this.disease =new Disease(disease.getName());
+    }
+
 
 /**
 * toString method
@@ -100,5 +110,7 @@ public class Humans extends LivingBeing {
         screen = "" + type + " " + state + " " + disease;
         return screen;
 	}
-
+    public Type getType(){
+        return Type.HUMAN;
+    }
 }
