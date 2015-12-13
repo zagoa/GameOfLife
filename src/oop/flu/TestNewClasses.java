@@ -20,13 +20,18 @@ public class TestNewClasses {
             int width = 0;
             int height = 0;
             double poputationRate = 0;
+            Neighbourhood nb = Neighbourhood.FOUR_N;
             System.out.print("Enter width (int): ");
             width = scan.nextInt();
             System.out.print("Enter height (int): ");
             height = scan.nextInt(); 
             System.out.print("Enter population rate (0 < n < 1): ");
             poputationRate = scan.nextDouble(); 
-            simul = new Simulation(width, height, poputationRate);
+            System.out.print("Enter type of neighbourhood (4 or 8): ");
+            int n = scan.nextInt();
+            if (n == 4) nb = Neighbourhood.FOUR_N;
+            else if (n == 8) nb = Neighbourhood.EIGTH_N;
+            simul = new Simulation(width, height, poputationRate, nb);
         }
         else {
             System.out.println("Yolo, retry plz");
@@ -34,17 +39,10 @@ public class TestNewClasses {
         }
         // fill the field of simul
         simul.fillField(simul.getPopulationRate());
-        // show the field
-        System.out.println(simul.getField().toString());
         
         // test one step
-        simul.simulateOneStep();
-        System.out.println(simul.getField().toString());
-        // Humans person = new Humans();
-        // person.changeState();
-        // System.out.println(person.toString());
-        System.out.println("Are they all dead? : " + simul.getField().areAllDead());
-        System.out.println("Are they all healthy? : " + simul.getField().areAllHealthy());
+        // simul.simulateOneStep();
+        // System.out.println(simul.getField().toString());
         
         simul.run();
     }

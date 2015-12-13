@@ -218,6 +218,6 @@ public class LivingBeing {
         this.mayChangeState = changeable;
     }
 
-    public void changeState(Disease disease){}
-    public Type getType(){return null; }
+    public void changeState(Disease disease) {}
+    public Type getType() {return null; }
 }

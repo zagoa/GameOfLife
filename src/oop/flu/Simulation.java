@@ -31,7 +31,7 @@ public class Simulation{
 * default constructor
 */
     public Simulation() {
-    	this(DEFAULT_WIDTH, DEFAULT_HEIGHT, POPULATION_RATE);
+    	this(DEFAULT_WIDTH, DEFAULT_HEIGHT, POPULATION_RATE, DEFAULT_NEIGHBOURHOOD);
     }
 /**
 * constructor of simulation
@@ -39,7 +39,7 @@ public class Simulation{
 * @param height Height of the field
 * @param populationRate Percentage of the field to be filled
 */
-    public Simulation (int width, int height, double populationRate) {
+    public Simulation (int width, int height, double populationRate, Neighbourhood n) {
     // si les valeurs sont negatives on les remet par defaut
     	if (width <= 0 || height <= 0) {
             System.out.println("The dimensions must be greater than zero.");
@@ -59,7 +59,7 @@ public class Simulation{
         }
         else this.populationRate=populationRate;
 
-
+        neighbourhood = n;
         field = new Field(width, height);
         livingBeings = new ArrayList<>();
         views = new ArrayList<>();
@@ -261,11 +261,33 @@ public class Simulation{
 */
     public void affectNeighbour(LivingBeing sick,int neighbourI,int neighbourJ){
         if (indexGood(neighbourI, neighbourJ, field) && (field.getLivingBeing(neighbourI, neighbourJ) != null)  && field.getLivingBeing(neighbourI, neighbourJ).mayChangeState()) {
-            LivingBeing neighbour=field.getLivingBeing(neighbourI, neighbourJ);
-            if(checkCompatibility(sick,field.getLivingBeing(neighbourI, neighbourJ))) {
+            LivingBeing neighbour = field.getLivingBeing(neighbourI, neighbourJ);
+            if(checkCompatibility(sick, field.getLivingBeing(neighbourI, neighbourJ))) {
                 neighbour.changeState(sick.getDisease());
                 neighbour.setChangeable(false);
             }
+        }
+    }
+
+/**
+* affect disease to the neighbours
+* @param n Type of neighbourhood (may be 4- or 8-)
+* @param sick a sick living being
+* @param positionX current X position of sick LB
+* @param positionY current Y position of sick LB
+*/ 
+    public void affectNeighbourhood(Neighbourhood n, LivingBeing sick, int positionX, int positionY) {
+        // dans tout le cas affecte les 4 voisins
+        affectNeighbour(sick, positionX + 1, positionY);
+        affectNeighbour(sick, positionX - 1, positionY);
+        affectNeighbour(sick, positionX, positionY - 1);
+        affectNeighbour(sick, positionX, positionY + 1);
+        // affecte encore 4 voisin en diagonale si c'est demande
+        if (n.equals(Neighbourhood.EIGTH_N)) {
+            affectNeighbour(sick, positionX + 1, positionY - 1);
+            affectNeighbour(sick, positionX - 1, positionY - 1);
+            affectNeighbour(sick, positionX + 1, positionY + 1);
+            affectNeighbour(sick, positionX - 1, positionY + 1);
         }
     }
 
@@ -289,10 +311,11 @@ public class Simulation{
                 if ((tmp.getLivingBeing(i, j) != null) && (tmp.getLivingBeing(i, j).getState().equals(State.CONTAGIOUS))) {
                     LivingBeing sick = field.getLivingBeing(i,j);
                     // change state of neighbours
-                    affectNeighbour(sick,i+1,j);
+                    affectNeighbourhood(neighbourhood, sick, i, j);
+                    /*affectNeighbour(sick,i+1,j);
                     affectNeighbour(sick,i-1,j);
                     affectNeighbour(sick,i,j-1);
-                    affectNeighbour(sick,i,j+1);
+                    affectNeighbour(sick,i,j+1);*/
                 }
                 // if there is a human and he is not dead, he can move on the field
                 if((field.getLivingBeing(i,j) != null) && field.getLivingBeing(i,j) instanceof Humans && field.getLivingBeing(i,j).getState()!=State.DEAD){
