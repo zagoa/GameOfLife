@@ -261,7 +261,8 @@ public class Simulation{
 * run one step of simulation
 */
     public void simulateOneStep() {
-        System.out.println("In simulateOneStep");
+        // System.out.println("In simulateOneStep");
+        removeDeadBeings();
         step++;
         // reset all LB of the field to change their states only one time
         reset();
@@ -307,13 +308,13 @@ public class Simulation{
     }
 
 /**
-* un the simulation
+* run the simulation
 * @throws  InterruptedException /to specify/
 */
     public void run() throws InterruptedException {
         while(!field.areAllDead() || !field.areAllHealthy()) {
             simulateOneStep();
-            System.out.println(field.toString());
+            // System.out.println(field.toString());
             try{
                 Thread.sleep(2000);
             }catch(Exception e){
@@ -322,16 +323,28 @@ public class Simulation{
         }
     }
 
+/**
+* manage time
+*/
     public void addTime(){
-
         for (int j = 0; j<height; j++){
             for (int i =0; i<width; i++){
                 Field tmp = this.field;
-                if ((tmp.getLivingBeing(i, j) != null) && !((tmp.getLivingBeing(i, j).getState()).equals(State.HEALTHY))) {
+                if ((tmp.getLivingBeing(i, j) != null) && !(tmp.getLivingBeing(i, j).isHealthy())) {
                     field.getLivingBeing(i, j).setTime(field.getLivingBeing(i, j).getTime() + 1);
-                    field.getLivingBeing(i,j).changeState(field.getLivingBeing(i,j).getDisease());
+                    // field.getLivingBeing(i,j).changeState(field.getLivingBeing(i,j).getDisease());
                 }
+            }
+        }
+    }
 
+/**
+* remove all dead living beings from the field
+*/
+    public void removeDeadBeings() {
+        for (int j = 0; j < this.height; j++) {
+            for (int i = 0; i < this.width; i++) {
+                if ((this.field.getLivingBeing(i, j) != null) && this.field.getLivingBeing(i, j).isDead()) this.field.remove(i, j);
             }
         }
     }
