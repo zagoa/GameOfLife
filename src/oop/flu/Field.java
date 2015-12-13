@@ -21,7 +21,7 @@ public class Field {
 * @param height height of the field
 * @param width width of the field
 */
-    public Field(int height, int width) {
+    public Field(int width, int height) {
     	this.height = height;
     	this.width = width;
     	field = new LivingBeing[width][height];
@@ -37,7 +37,11 @@ public class Field {
     		}
     	}
     }
-
+/**
+* remove LB from field[width][height]
+* @param width where to remove LB from
+* @param height where to remove LB from
+*/
     public void remove(int width, int height){ field[width][height] = null;}
 
     /**

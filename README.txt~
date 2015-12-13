@@ -1,0 +1,30 @@
+Simulation of flu epidemic project.
+Authors: Arnaud Zago, Liavona Zheltanosava, Baisangour Akhmadov
+Group: 2
+
+-------- COMPILE & RUN --------
+To compile the project:
+	mkdir build
+	mkdir build/classes
+	javac -d build/classes src/oop/flu/*.java
+
+To run the application:
+	java -cp build/classes oop.flu.Main
+
+--------- PARAMETERS ----------
+// reecrire
+The application has its default parameters :
+Area size : 50 cases
+Population : 50% (half of field is filled by living beings with 50% of humans and 50% of animals)
+Percentage of sick animals : 50%
+Neighbourhood type : 4-neighbourhood 
+Infection rate : 25%
+
+A user may change those parameters.
+
+---------- DESCRIPTION ----------
+The application run the simulation of a flu epidemic with the conditions given on Moodle.
+Simulation is over when every human is either healthy or dead.
+We implement two variants :
+ - if a human is not dead after recovering state he is not capable to catch the infection;
+ - if a human is vaccinated, he is not capable to catch the infection.
