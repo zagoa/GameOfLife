@@ -10,9 +10,9 @@ public class LivingBeing {
     // type of living being
     protected final Type type;
     // inutile
-//    private State[] allState = {State.HEALTHY, State.SICK, State.CONTAGIOUS, State.RECOVERING, State.DEAD,State.IMUN};
-//    private DiseaseEnum[] allDisease = {DiseaseEnum.NONE, DiseaseEnum.H1N1, DiseaseEnum.H5N1};
-//    private Type[] allType = {Type.HUMAN, Type.PIG, Type.DUCK, Type.CHICKEN};
+    private State[] allState = {State.HEALTHY, State.SICK, State.CONTAGIOUS, State.RECOVERING, State.DEAD,State.IMUN};
+    private DiseaseEnum[] allDisease = {DiseaseEnum.NONE, DiseaseEnum.H1N1, DiseaseEnum.H5N1};
+    private Type[] allType = {Type.HUMAN, Type.PIG, Type.DUCK, Type.CHICKEN};
     // state of living being
     protected State stateEnum;
     protected String state;

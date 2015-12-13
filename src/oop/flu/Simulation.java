@@ -324,10 +324,10 @@ public class Simulation{
 
     public void addTime(){
 
-        for (int i = 0; i<height; i++){
-            for (int j =0; j<width; j++){
+        for (int j = 0; j<height; j++){
+            for (int i =0; i<width; i++){
                 Field tmp = this.field;
-                if ((tmp.getLivingBeing(i, j) != null) && !((tmp.getLivingBeing(i, j).getState()).equals(State.HEALTHY)) && !((tmp.getLivingBeing(i, j).getState()).equals(State.HEALTHY))) {
+                if ((tmp.getLivingBeing(i, j) != null) && !((tmp.getLivingBeing(i, j).getState()).equals(State.HEALTHY))) {
                     field.getLivingBeing(i, j).setTime(field.getLivingBeing(i, j).getTime() + 1);
                     field.getLivingBeing(i,j).changeState(field.getLivingBeing(i,j).getDisease());
                 }
