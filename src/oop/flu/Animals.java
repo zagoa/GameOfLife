@@ -3,12 +3,14 @@ import java.util.Random;
 
 /**
 * A class representing common characteristics of animals
-* @version 2015.12.07
+* @version 2015.12.13
 * @author Baisangour Akhmadov
+* @author Liavona Zheltanosava
 */
 public abstract class Animals extends LivingBeing {
 	// percentage mortality rate of an animal
     private static final int MORTALITY_RATE = 42;
+
     /**
     * default constructor
     * @param type Type of an animal (chiken, duck or pig)
@@ -22,8 +24,8 @@ public abstract class Animals extends LivingBeing {
 
     /**
     * change the current state of an animal
+    * @param disease Possible disease
     */
-
     @Override
     public void changeState(Disease disease) {
         if (mayChangeState == false) return;

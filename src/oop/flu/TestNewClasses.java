@@ -2,6 +2,12 @@ package oop.flu;
 
 import java.util.*;
 
+/**
+* A main class
+* @version 2015.12.13
+* @author Liavona Zheltanosava
+*/
+
 public class TestNewClasses {
 
     public static void main(String[] args) throws InterruptedException {
@@ -31,19 +37,22 @@ public class TestNewClasses {
             int n = scan.nextInt();
             if (n == 4) nb = Neighbourhood.FOUR_N;
             else if (n == 8) nb = Neighbourhood.EIGTH_N;
+            else {
+                System.out.println("Type of heighbouthood must be 4 or 8.");
+                System.out.println("Using default type.");
+                nb = Neighbourhood.FOUR_N;
+            }
             simul = new Simulation(width, height, poputationRate, nb);
         }
         else {
             System.out.println("Yolo, retry plz");
             return;
         }
+        System.out.println("pop rate = " + simul.getPopulationRate());
+        System.out.println("width = " + simul.getField().getWidth());
+        System.out.println("height = " + simul.getField().getHeight());
         // fill the field of simul
         simul.fillField(simul.getPopulationRate());
-        
-        // test one step
-        // simul.simulateOneStep();
-        // System.out.println(simul.getField().toString());
-        
         simul.run();
     }
 }
