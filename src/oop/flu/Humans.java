@@ -4,10 +4,7 @@ import java.util.Random;
 
 /**
 * A class representing common characteristics of humans
-* @version 2015.12.13
-* @author Baisangour Akhmadov
-* @author Liavona Zheltanosava
-* @author Arnaud Zago
+* @version 2015.12.07
 */
 public class Humans extends LivingBeing {
     /**
@@ -15,22 +12,21 @@ public class Humans extends LivingBeing {
     * human is healthy
     */
 	public Humans(){
-		super(Type.HUMAN, State.HEALTHY, DiseaseEnum.NONE, 0);
+		super(Type.HUMAN,State.HEALTHY, DiseaseEnum.NONE, 0);
 	}
 
     /**
     * constructor
-    * @param state Human's state (healthy, sick, etc.)
-    * @param disease Current disease
-    * @param time
+    * @param state human's state (healthy, sick, etc.)
+    * @param disease current disease
+    * @param time /to specify/
     */
 	public Humans(State state, DiseaseEnum disease, int time){
-		super(Type.HUMAN, state, disease, time);
+		super(Type.HUMAN,state,disease, time);
 	}
 
     /**
     * change the current human's state
-    * @param disease A disease with its own parameters
     */
     @Override
     public void changeState(Disease disease) {
@@ -44,9 +40,14 @@ public class Humans extends LivingBeing {
             setState(State.CONTAGIOUS);
         }
         else if (stateEnum.equals(State.CONTAGIOUS) && (getTime()>disease.getRecoveryTime())) {
+            // TODO : faire un random correct
+            // TODO : mettre le pourcentage dans une constante
             Random rand = new Random();
             int randomNumber;
             randomNumber = rand.nextInt(101);
+            // juste pour tester
+            // il faudra le mettre en constante
+            int percentage = 80; //taux de mort de la maladie
             if (randomNumber >= disease.getDeathRate()) {
                 setState(State.DEAD);
                 setDead(true);
@@ -56,12 +57,11 @@ public class Humans extends LivingBeing {
                 cureDisease();
                 setHealthy(true);
             }
-        }
-    }
 
-    /**
-    * @param disease A disease to be set
-    */
+        }
+
+
+    }
     public void setDisease(Disease disease){
         diseaseEnum=disease.getName();
         this.disease =new Disease(disease.getName());
@@ -110,10 +110,6 @@ public class Humans extends LivingBeing {
         screen = "" + type + " " + state + " " + disease;
         return screen;
 	}
-
-    /**
-    * @return type of living being (human)
-    */
     public Type getType(){
         return Type.HUMAN;
     }

@@ -38,8 +38,7 @@ public class GridView extends JFrame implements SimulatorView {
      * @param width
      *            The simulation's width.
      */
-    //public GridView(int height, int width) {
-    public GridView(int width, int height) {
+    public GridView(int height, int width) {
         stats = new FieldStats();
         colors = new HashMap<>();
 
