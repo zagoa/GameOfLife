@@ -19,13 +19,16 @@ given on Moodle.
 The application creates a 2D field filled with different
 living beings (humans, pigs, ducks and chickens) and simulates a spread of
 flu. 
-If a living being dies it is removed from the field.
+If a living being dies it is removed from the field the next step.
 Humans can move on the field (animals cannot).
-The state of one living being can be determined by specific color :
-RED for HEALTHY
-LightGray for CONTAGIOUS
-MAGENTA for DEAD
-CYAN for RECOVERING and IMUN
+
+Different types of being are identified by different colors:
+-BLUE for Humans
+-PINK/PURPLE for Pigs
+-YELLOW for Chickens
+-GREEN for Ducks
+Their state (Healthy,Sick,Contagious,Dead) is identified with a darker color (the closer they are to death, the darker the color is). If they are dead the color is black.
+For humans, immunised humans are identified by a light blue color.
 
 Graphic interface was taken from rabbits&foxes project.
 
