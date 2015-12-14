@@ -94,6 +94,8 @@ public class Simulation{
         //IMMUNITY
         view.setColor(Humans.class,State.IMUN, new Color(142,161,255));
 
+        //VACCINA
+        view.setColor(Humans.class,State.VACCINATE, new Color(100,100,100));
         views.add(view);
 
         // Setup a valid starting point.
@@ -150,9 +152,12 @@ public class Simulation{
                 if (rand.nextDouble() <= populationRate) {
                     // create a new person and place it on the field
                     Random newRandom = new Random();
-
                     if (newRandom.nextDouble() <= 0.5) {
-                        Humans person = new Humans();
+                        Random vaccinated = new Random();
+                        Humans person;
+                        // il y a moins que 10% des personnes vaccinnes
+                        if (vaccinated.nextDouble() <= 0.1) person = new Humans(State.VACCINATE);
+                        else person = new Humans();
                         livingBeings.add(person);
                         field.place(person, i, j);
                     }

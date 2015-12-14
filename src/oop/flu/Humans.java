@@ -21,16 +21,20 @@ public class Humans extends LivingBeing {
     * @param disease current disease
     * @param time /to specify/
     */
-	public Humans(State state, DiseaseEnum disease, int time){
+/*	public Humans(State state, DiseaseEnum disease, int time){
 		super(Type.HUMAN,state,disease, time);
 	}
+*/
+    public Humans(State state) {
+        super(Type.HUMAN, state, DiseaseEnum.NONE, 0);
+    }
 
     /**
     * change the current human's state
     */
     @Override
     public void changeState(Disease disease) {
-        if (mayChangeState == false) return;
+        if (mayChangeState == false || stateEnum.equals(State.VACCINATE)) return;
         if (stateEnum.equals(State.HEALTHY)) {
             setState(State.SICK);
             setDisease(disease);
