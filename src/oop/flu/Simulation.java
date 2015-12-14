@@ -67,50 +67,33 @@ public class Simulation{
         views = new ArrayList<>();
 
         SimulatorView view = new GridView(width, height);
-        //HEALTHY
-        view.setColor(Humans.class,State.HEALTHY, Color.BLUE);
-        view.setColor(Chicken.class,State.HEALTHY, Color.ORANGE);
-        view.setColor(Pig.class,State.HEALTHY, Color.PINK);
-        view.setColor(Duck.class,State.HEALTHY, Color.GREEN);
+         //HEALTHY
+        view.setColor(Humans.class,State.HEALTHY, new Color(0,0,255));
+        view.setColor(Chicken.class,State.HEALTHY, new Color(255,255,0));
+        view.setColor(Duck.class,State.HEALTHY, new Color(0,255,0));
+        view.setColor(Pig.class,State.HEALTHY, new Color(255,0,255));
 
         //SICK
-
-        view.setColor(Humans.class,State.SICK, Color.RED);
-        view.setColor(Chicken.class,State.SICK, Color.RED);
-        view.setColor(Pig.class,State.SICK, Color.RED);
-        view.setColor(Duck.class,State.SICK, Color.RED);
+        view.setColor(Humans.class,State.SICK, new Color(0,0,160));
+        view.setColor(Chicken.class,State.SICK, new Color(180,180,0));
+        view.setColor(Duck.class,State.SICK, new Color(0,180,0));
+        view.setColor(Pig.class,State.SICK, new Color(180,0,180));
 
         //CONTAGIOUS
-        view.setColor(Humans.class,State.CONTAGIOUS, Color.lightGray);
-        view.setColor(Chicken.class,State.CONTAGIOUS, Color.lightGray);
-        view.setColor(Pig.class,State.CONTAGIOUS, Color.lightGray);
-        view.setColor(Duck.class,State.CONTAGIOUS, Color.lightGray);
+        view.setColor(Humans.class,State.CONTAGIOUS, new Color(0,0,100));
+        view.setColor(Chicken.class,State.CONTAGIOUS, new Color(100,100,0));
+        view.setColor(Duck.class,State.CONTAGIOUS, new Color(0,100,0));
+        view.setColor(Pig.class,State.CONTAGIOUS, new Color(100,0,100));
 
         //DEAD
-        view.setColor(Humans.class,State.DEAD, Color.MAGENTA);
-        view.setColor(Chicken.class,State.DEAD, Color.MAGENTA);
-        view.setColor(Pig.class,State.DEAD, Color.MAGENTA);
-        view.setColor(Duck.class,State.DEAD, Color.MAGENTA);
-
-        //RECOVERING
-        view.setColor(Humans.class,State.RECOVERING, Color.CYAN);
-        view.setColor(Chicken.class,State.RECOVERING, Color.CYAN);
-        view.setColor(Pig.class,State.RECOVERING, Color.CYAN);
-        view.setColor(Duck.class,State.RECOVERING, Color.CYAN);
+        view.setColor(Humans.class,State.DEAD, new Color(0,0,0));
+        view.setColor(Chicken.class,State.DEAD, new Color(0,0,0));
+        view.setColor(Duck.class,State.DEAD, new Color(0,0,0));
+        view.setColor(Pig.class,State.DEAD, new Color(0,0,0));
 
         //IMMUNITY
-        view.setColor(Humans.class,State.IMUN, Color.CYAN);
-        view.setColor(Chicken.class,State.IMUN, Color.CYAN);
-        view.setColor(Pig.class,State.IMUN, Color.CYAN);
-        view.setColor(Duck.class,State.IMUN, Color.CYAN);
+        view.setColor(Humans.class,State.IMUN, new Color(142,161,255));
 
-        //DISEASES
-     /*   view.setColor(Humans.class,DiseaseEnum.H1N1, new Color(122,95,229));
-        view.setColor(Humans.class,DiseaseEnum.H5N1, new Color(54,43,98));
-        view.setColor(Chicken.class,DiseaseEnum.H5N1, new Color(197,161,0));
-        view.setColor(Pig.class,DiseaseEnum.H1N1, new Color(74,32,73));
-        view.setColor(Duck.class,DiseaseEnum.H5N1, new Color(8,59,0));
-*/
         views.add(view);
 
         // Setup a valid starting point.
