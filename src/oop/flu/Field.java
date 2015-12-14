@@ -13,10 +13,10 @@ public class Field {
     private LivingBeing[][] field;
 
     // indicators of wether everyone is dead or alive
-    private boolean areDead;
-    private boolean areHealthy;
+    private boolean finish;
 
-/**
+
+    /**
 * default contructor
 * @param height height of the field
 * @param width width of the field
@@ -45,7 +45,7 @@ public class Field {
     public void remove(int width, int height){ field[width][height] = null;}
 
     /**
-* @param LB to be placed
+* @param lb to be placed
 * @param width where to place LB
 * @param height where to place LB
 */
@@ -76,37 +76,22 @@ public class Field {
 /**
 * @return wether all LB on the field are dead
 */
-    public boolean areAllDead() {
-        this.areDead = false;
+    public boolean isFinish() {
+        this.finish = false;
         for (int j = 0; j < this.height; j++) {
             for (int i = 0; i < this.width; i++){
-                // if there is someone and he is not dead
-                if ((field[i][j] != null) && (!field[i][j].isDead())) {
-                    //System.out.println("World is not dead");
-                    return areDead;
+                // if there is someone and he is Sick or Contagious
+                if ((field[i][j] != null) && ((field[i][j].getState() == State.SICK) || (field[i][j].getState()==State.CONTAGIOUS))) {
+                    return finish;
                 }
             }
         }
-        //System.out.println("World is dead muahahahaha");
-        areDead = true;
-        return areDead;
+        this.finish = true;
+        System.out.println("THAT IS THE END");
+        return finish;
     }
-/**
-* @return wether all LB on the field are healthy
-*/
-	public boolean areAllHealthy() {
-        this.areHealthy = false;
-        for (int j = 0; j < this.height; j++) {
-            for (int i = 0; i < this.width; i++) {
-                if ((field[i][j] != null) && (!field[i][j].isHealthy())) {
-                    return areHealthy;
-                }
-            }
-        }
-        areHealthy = true;
-        return areHealthy;
-    }
-    
+
+
 /**
 * toString method
 */

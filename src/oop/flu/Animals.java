@@ -30,8 +30,11 @@ public abstract class Animals extends LivingBeing {
         if (stateEnum.equals(State.HEALTHY)) {
             setState(State.SICK);
             setDisease(disease);
+            System.out.println("coucou");
         }
         else if (stateEnum.equals(State.SICK) && getTime()>disease.getContagiousTime()) setState(State.CONTAGIOUS);
+
+
         else if (stateEnum.equals(State.CONTAGIOUS) && getTime()>disease.getRecoveryTime()) {
             // generate a random integer between 0 and 100
             Random rand = new Random();

@@ -325,7 +325,7 @@ public class Simulation{
             this.speed = DEFAULT_SPEED;
         }
         else this.speed = speed;
-        while(!field.areAllDead() || !field.areAllHealthy()) {
+        while(!field.isFinish() ) {
             simulateOneStep();
             try{
                 Thread.sleep(speed);
