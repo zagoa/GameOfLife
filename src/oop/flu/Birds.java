@@ -15,11 +15,10 @@ public abstract class Birds extends Animals{
     */
 	public Birds(Type type, State state, int time) {
 		super(type,state, DiseaseEnum.H5N1, time);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void setDisease(){
-		disease =new Disease(DiseaseEnum.H5N1);
+		disease = new Disease(DiseaseEnum.H5N1);
 	}
 
 }

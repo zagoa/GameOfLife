@@ -67,50 +67,33 @@ public class Simulation{
         views = new ArrayList<>();
 
         SimulatorView view = new GridView(width, height);
-        //HEALTHY
-        view.setColor(Humans.class,State.HEALTHY, Color.BLUE);
-        view.setColor(Chicken.class,State.HEALTHY, Color.ORANGE);
-        view.setColor(Pig.class,State.HEALTHY, Color.PINK);
-        view.setColor(Duck.class,State.HEALTHY, Color.GREEN);
+         //HEALTHY
+        view.setColor(Humans.class,State.HEALTHY, new Color(0,0,255));
+        view.setColor(Chicken.class,State.HEALTHY, new Color(255,255,0));
+        view.setColor(Duck.class,State.HEALTHY, new Color(0,255,0));
+        view.setColor(Pig.class,State.HEALTHY, new Color(255,0,255));
 
         //SICK
-
-        view.setColor(Humans.class,State.SICK, Color.RED);
-        view.setColor(Chicken.class,State.SICK, Color.RED);
-        view.setColor(Pig.class,State.SICK, Color.RED);
-        view.setColor(Duck.class,State.SICK, Color.RED);
+        view.setColor(Humans.class,State.SICK, new Color(0,0,160));
+        view.setColor(Chicken.class,State.SICK, new Color(180,180,0));
+        view.setColor(Duck.class,State.SICK, new Color(0,180,0));
+        view.setColor(Pig.class,State.SICK, new Color(180,0,180));
 
         //CONTAGIOUS
-        view.setColor(Humans.class,State.CONTAGIOUS, Color.lightGray);
-        view.setColor(Chicken.class,State.CONTAGIOUS, Color.lightGray);
-        view.setColor(Pig.class,State.CONTAGIOUS, Color.lightGray);
-        view.setColor(Duck.class,State.CONTAGIOUS, Color.lightGray);
+        view.setColor(Humans.class,State.CONTAGIOUS, new Color(0,0,100));
+        view.setColor(Chicken.class,State.CONTAGIOUS, new Color(100,100,0));
+        view.setColor(Duck.class,State.CONTAGIOUS, new Color(0,100,0));
+        view.setColor(Pig.class,State.CONTAGIOUS, new Color(100,0,100));
 
         //DEAD
-        view.setColor(Humans.class,State.DEAD, Color.MAGENTA);
-        view.setColor(Chicken.class,State.DEAD, Color.MAGENTA);
-        view.setColor(Pig.class,State.DEAD, Color.MAGENTA);
-        view.setColor(Duck.class,State.DEAD, Color.MAGENTA);
-
-        //RECOVERING
-        view.setColor(Humans.class,State.RECOVERING, Color.CYAN);
-        view.setColor(Chicken.class,State.RECOVERING, Color.CYAN);
-        view.setColor(Pig.class,State.RECOVERING, Color.CYAN);
-        view.setColor(Duck.class,State.RECOVERING, Color.CYAN);
+        view.setColor(Humans.class,State.DEAD, new Color(0,0,0));
+        view.setColor(Chicken.class,State.DEAD, new Color(0,0,0));
+        view.setColor(Duck.class,State.DEAD, new Color(0,0,0));
+        view.setColor(Pig.class,State.DEAD, new Color(0,0,0));
 
         //IMMUNITY
-        view.setColor(Humans.class,State.IMUN, Color.CYAN);
-        view.setColor(Chicken.class,State.IMUN, Color.CYAN);
-        view.setColor(Pig.class,State.IMUN, Color.CYAN);
-        view.setColor(Duck.class,State.IMUN, Color.CYAN);
+        view.setColor(Humans.class,State.IMUN, new Color(142,161,255));
 
-        //DISEASES
-     /*   view.setColor(Humans.class,DiseaseEnum.H1N1, new Color(122,95,229));
-        view.setColor(Humans.class,DiseaseEnum.H5N1, new Color(54,43,98));
-        view.setColor(Chicken.class,DiseaseEnum.H5N1, new Color(197,161,0));
-        view.setColor(Pig.class,DiseaseEnum.H1N1, new Color(74,32,73));
-        view.setColor(Duck.class,DiseaseEnum.H5N1, new Color(8,59,0));
-*/
         views.add(view);
 
         // Setup a valid starting point.
@@ -259,11 +242,33 @@ public class Simulation{
             }
         }
     }
+
+/**
+* affect disease to the neighbours
+* @param n Type of neighbourhood (may be 4- or 8-)
+* @param sick a sick living being
+* @param positionX current X position of sick LB
+* @param positionY current Y position of sick LB
+*/ 
+    public void affectNeighbourhood(Neighbourhood n, LivingBeing sick, int positionX, int positionY) {
+        // dans tout le cas affecte les 4 voisins
+        affectNeighbour(sick, positionX + 1, positionY);
+        affectNeighbour(sick, positionX - 1, positionY);
+        affectNeighbour(sick, positionX, positionY - 1);
+        affectNeighbour(sick, positionX, positionY + 1);
+        // affecte encore 4 voisin en diagonale si c'est demande
+        if (n.equals(Neighbourhood.EIGTH_N)) {
+            affectNeighbour(sick, positionX + 1, positionY - 1);
+            affectNeighbour(sick, positionX - 1, positionY - 1);
+            affectNeighbour(sick, positionX + 1, positionY + 1);
+            affectNeighbour(sick, positionX - 1, positionY + 1);
+        }
+    }
+
     /**
 * run one step of simulation
 */
     public void simulateOneStep() {
-        System.out.println("In simulateOneStep");
         step++;
         // reset all LB of the field to change their states only one time
         reset();
@@ -281,10 +286,11 @@ public class Simulation{
                     LivingBeing sick=field.getLivingBeing(i,j);
                     // System.out.println("i = " + i + " j = " + j + " is CONTAGIOUS");
                     // change state of neighbours
-                    affectNeighbour(sick,i+1,j);
+                    affectNeighbourhood(neighbourhood, sick, i, j);
+/*                    affectNeighbour(sick,i+1,j);
                     affectNeighbour(sick,i-1,j);
                     affectNeighbour(sick,i,j-1);
-                    affectNeighbour(sick,i,j+1);
+                    affectNeighbour(sick,i,j+1);*/
                 }
                 // if there is a human and he is not dead, he can move on the field
                 if((field.getLivingBeing(i,j) != null) && field.getLivingBeing(i,j) instanceof Humans && field.getLivingBeing(i,j).getState()!=State.DEAD){
@@ -321,7 +327,6 @@ public class Simulation{
         else this.speed = speed;
         while(!field.areAllDead() || !field.areAllHealthy()) {
             simulateOneStep();
-            System.out.println(field.toString());
             try{
                 Thread.sleep(speed);
             }catch(Exception e){
