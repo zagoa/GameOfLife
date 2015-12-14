@@ -4,26 +4,27 @@ package oop.flu;
 * A class representing common characteristics of all living beings of the simulation
 * @version 2015.12.07
 * @author Arnaud Zago
+* @author Liavona Zheltanosava
 */
 
 public class LivingBeing {
     // type of living being
     protected final Type type;
-    // inutile
-//    private State[] allState = {State.HEALTHY, State.SICK, State.CONTAGIOUS, State.RECOVERING, State.DEAD,State.IMUN};
-//    private Disease[] allDisease = {Disease.NONE, Disease.H1N1, Disease.H5N1};
-//    private Type[] allType = {Type.HUMAN, Type.PIG, Type.DUCK, Type.CHICKEN};
+/*    // inutile
+    private State[] allState = {State.HEALTHY, State.SICK, State.CONTAGIOUS, State.RECOVERING, State.DEAD,State.IMUN};
+    private DiseaseEnum[] allDisease = {DiseaseEnum.NONE, DiseaseEnum.H1N1, DiseaseEnum.H5N1};
+    private Type[] allType = {Type.HUMAN, Type.PIG, Type.DUCK, Type.CHICKEN};*/
     // state of living being
     protected State stateEnum;
     protected String state;
     // disease of living being
-    protected Disease diseaseEnum;
-    private String disease;
+    protected DiseaseEnum diseaseEnum;
+    protected Disease disease;
     private int time;
     // wether it is infected
     private boolean infected = false;
-    // ???
-    private boolean isNew = false;
+/*    // ???
+    private boolean isNew = false;*/
     // wether it is dead
     private boolean dead = false;
     // wether it is healthy
@@ -38,72 +39,14 @@ public class LivingBeing {
     * @param disease current disease
     * @param time /to specify/
     */
-    public LivingBeing(Type type, State state, Disease disease, int time) {
+    public LivingBeing(Type type, State state, DiseaseEnum disease, int time) {
     	this.stateEnum = state;
         this.state = state.toString();
         this.diseaseEnum = disease;
-        this.disease = disease.toString();
         this.type = type;
         this.time = time;
         this.mayChangeState = true;
     }
-
-    //@Override
-   /* public String toString(){
-        String screen;
-        String type="",state="",desease ="";
-
-        switch (this.type) {
-            case HUMAN:
-                type = "Hu";
-                break;
-            case PIG:
-                type = "Pi";
-                break;
-            case CHICKEN:
-                type = "Ch";
-                break;
-            case DUCK:
-                type = "Du";
-                break;
-        }
-        switch (this.stateEnum) {
-            case SICK:
-                state = "S";
-                break;
-            case HEALTHY:
-                state = "H";
-                break;
-            case CONTAGIOUS:
-                state = "C";
-                break;
-            case RECOVERING:
-                state = "R";
-                break;
-            case DEAD:
-                state = "D";
-                break;
-            case IMUN:
-                state = "I";
-                break;
-        }
-        switch(this.diseaseEnum) {
-            case NONE:
-                desease = "NO";
-                break;
-            case H1N1:
-                desease = "H1";
-                break;
-            case H5N1:
-                desease = "H5";
-                break;
-        }
-
-        screen = ""+type+" "+state+" "+desease;
-        return screen;
-
-    }
-*/
 
 /**
 * @return time
@@ -122,27 +65,36 @@ public class LivingBeing {
 /**
 * @return current disease
 */
-    public Disease getDisease() {
+    public DiseaseEnum getDiseaseEnum() {
         return diseaseEnum;
     }
 
 /**
-* @return current state
+* changes the being's current state
 */
     public void setState(State state) {
         this.stateEnum = state;
-        //this.state=this.stateEnum.toString();
     }
 
 /**
 * @param disease a disease to be set
 */
     public void setDisease(Disease disease) {
-        this.diseaseEnum = disease;
-        //this.disease=this.diseaseEnum.toString();
+        this.disease = disease;
+    }
+
+    public void cureDisease(){
+        this.disease = null;
+    }
+
+/**
+* @return current disease
+*/
+    public Disease getDisease(){
+        return disease;
     }
 /**
-* @param time a time to be set
+* @param timeSpend a time to be set
 */
     public void setTime(int timeSpend) {
         this.time = timeSpend;
@@ -166,12 +118,12 @@ public class LivingBeing {
 /**
 * NE SONT PAS UTILISES
 */
-    public boolean isNew() {
+/*    public boolean isNew() {
         return isNew;
     }
     public void setNew(boolean aNew) {
         isNew = aNew;
-    }
+    }*/
 
 /**
 * @return wether LB is dead 
@@ -186,7 +138,7 @@ public class LivingBeing {
         return healthy;
     }
 /**
-* kill LB
+* change state of LB to dead
 */
     public void setDead(boolean dead) {
         this.dead = dead;
@@ -209,6 +161,10 @@ public class LivingBeing {
     public void setChangeable(boolean changeable) {
         this.mayChangeState = changeable;
     }
-
-    public void changeState(){}
+/**
+* change state of LV
+*/
+    public void changeState(Disease disease) {}
+    
+    public Type getType() { return null; }
 }

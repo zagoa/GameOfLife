@@ -4,7 +4,10 @@ import java.util.Random;
 
 /**
 * A class representing common characteristics of humans
-* @version 2015.12.07
+* @version 2015.12.13
+* @author Baisangour Akhmadov
+* @author Liavona Zheltanosava
+* @author Arnaud Zago
 */
 public class Humans extends LivingBeing {
     /**
@@ -12,51 +15,58 @@ public class Humans extends LivingBeing {
     * human is healthy
     */
 	public Humans(){
-		super(Type.HUMAN,State.HEALTHY,Disease.NONE, 0);
+		super(Type.HUMAN, State.HEALTHY, DiseaseEnum.NONE, 0);
 	}
 
     /**
     * constructor
-    * @param state human's state (healthy, sick, etc.)
-    * @param disease current disease
-    * @param time /to specify/
+    * @param state Human's state (healthy, sick, etc.)
+    * @param disease Current disease
+    * @param time
     */
-	public Humans(State state, Disease disease, int time){
-		super(Type.HUMAN,state,disease, time);
+	public Humans(State state, DiseaseEnum disease, int time){
+		super(Type.HUMAN, state, disease, time);
 	}
 
     /**
     * change the current human's state
+    * @param disease A disease with its own parameters
     */
     @Override
-    public void changeState() {
+    public void changeState(Disease disease) {
         if (mayChangeState == false) return;
         if (stateEnum.equals(State.HEALTHY)) {
-            // System.out.println("He is healthy");
             setState(State.SICK);
-
+            setDisease(disease);
         }
-        else if (stateEnum.equals(State.SICK) && (getTime()>2)) setState(State.CONTAGIOUS);
-        else if (stateEnum.equals(State.CONTAGIOUS) && (getTime()>4)) {
-            // TODO : faire un random correct
-            // TODO : mettre le pourcentage dans une constante
+
+        else if (stateEnum.equals(State.SICK) && (getTime()>disease.getContagiousTime())) {
+            setState(State.CONTAGIOUS);
+        }
+        else if (stateEnum.equals(State.CONTAGIOUS) && (getTime()>disease.getRecoveryTime())) {
             Random rand = new Random();
             int randomNumber;
             randomNumber = rand.nextInt(101);
-            // juste pour tester
-            // il faudra le mettre en constante
-            int percentage = 80; //taux de mort de la maladie
-            if (randomNumber >= percentage) {
-            //if (randomNumber <= percentage) {
+            if (randomNumber >= disease.getDeathRate()) {
                 setState(State.DEAD);
                 setDead(true);
-            } 
+            }
             else {
                 setState(State.IMUN);
+                cureDisease();
                 setHealthy(true);
             }
         }
     }
+
+    /**
+    * @param disease A disease to be set
+    */
+    public void setDisease(Disease disease){
+        diseaseEnum=disease.getName();
+        this.disease =new Disease(disease.getName());
+    }
+
 
 /**
 * toString method
@@ -101,4 +111,10 @@ public class Humans extends LivingBeing {
         return screen;
 	}
 
+    /**
+    * @return type of living being (human)
+    */
+    public Type getType(){
+        return Type.HUMAN;
+    }
 }

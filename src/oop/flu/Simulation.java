@@ -6,7 +6,9 @@ import java.util.List;
 
 /**
 * A class describing a simulation
-* @version 2015.12.07
+* @version 2015.12.13
+* @author Baisangour Akhmadov
+* @author Arnaud Zago
 * @author Liavona Zheltanosava
 */
 public class Simulation{
@@ -16,49 +18,55 @@ public class Simulation{
     private static final int DEFAULT_HEIGHT = 25;
     private static final double POPULATION_RATE = 0.5;
     private static final Neighbourhood DEFAULT_NEIGHBOURHOOD = Neighbourhood.FOUR_N;
+    private static final int DEFAULT_SPEED = 2000;
 
     private int width;
-    private int heigth;
+    private int height;
     private double populationRate;
-    private Field field;
-    private List<SimulatorView> views;
-    private List<LivingBeing> animals;
-    private int step;
-
     private Neighbourhood neighbourhood;
+    private Field field;
+    private int speed;
+    private List<SimulatorView> views;
+    private List<LivingBeing> livingBeings;
+    private int step;
 
 /**
 * default constructor
 */
     public Simulation() {
-    	this(DEFAULT_WIDTH, DEFAULT_HEIGHT, POPULATION_RATE);
+    	this(DEFAULT_WIDTH, DEFAULT_HEIGHT, POPULATION_RATE, DEFAULT_NEIGHBOURHOOD);
     }
 /**
 * constructor of simulation
 * @param width Width of the field
-* @param heigth Height of the field
+* @param height Height of the field
 * @param populationRate Percentage of the field to be filled
 */
-    public Simulation (int width, int heigth, double populationRate) {
+    public Simulation (int width, int height, double populationRate, Neighbourhood n) {
     // si les valeurs sont negatives on les remet par defaut
-    	if (width <= 0 || heigth <= 0) {
+    	if (width <= 0 || height <= 0) {
             System.out.println("The dimensions must be greater than zero.");
             System.out.println("Using default values.");
-            heigth = DEFAULT_HEIGHT;
-            width = DEFAULT_WIDTH;
+            this.height = DEFAULT_HEIGHT;
+            this.width = DEFAULT_WIDTH;
         }
-
+        else{
+            this.height = height;
+            this.width = width;
+        }
         if (populationRate <= 0) {
             System.out.println("The population rate must be > 0");
             System.out.println("Using default values.");
-            this.populationRate = populationRate;
+            this.populationRate = POPULATION_RATE;
         }
+        else this.populationRate = populationRate;
 
-        field = new Field(width, heigth);
-        animals = new ArrayList<>();
+        neighbourhood = n;
+        field = new Field(this.width, this.height);
+        livingBeings = new ArrayList<>();
         views = new ArrayList<>();
 
-        SimulatorView view = new GridView(width, heigth);
+        SimulatorView view = new GridView(this.width, this.height);
         //HEALTHY
         view.setColor(Humans.class,State.HEALTHY, Color.BLUE);
         view.setColor(Chicken.class,State.HEALTHY, Color.ORANGE);
@@ -66,17 +74,16 @@ public class Simulation{
         view.setColor(Duck.class,State.HEALTHY, Color.GREEN);
 
         //SICK
-
         view.setColor(Humans.class,State.SICK, Color.RED);
         view.setColor(Chicken.class,State.SICK, Color.RED);
         view.setColor(Pig.class,State.SICK, Color.RED);
         view.setColor(Duck.class,State.SICK, Color.RED);
 
         //CONTAGIOUS
-        view.setColor(Humans.class,State.CONTAGIOUS, Color.BLACK);
-        view.setColor(Chicken.class,State.CONTAGIOUS, Color.BLACK);
-        view.setColor(Pig.class,State.CONTAGIOUS, Color.BLACK);
-        view.setColor(Duck.class,State.CONTAGIOUS, Color.BLACK);
+        view.setColor(Humans.class,State.CONTAGIOUS, Color.lightGray);
+        view.setColor(Chicken.class,State.CONTAGIOUS, Color.lightGray);
+        view.setColor(Pig.class,State.CONTAGIOUS, Color.lightGray);
+        view.setColor(Duck.class,State.CONTAGIOUS, Color.lightGray);
 
         //DEAD
         view.setColor(Humans.class,State.DEAD, Color.MAGENTA);
@@ -96,28 +103,50 @@ public class Simulation{
         view.setColor(Pig.class,State.IMUN, Color.CYAN);
         view.setColor(Duck.class,State.IMUN, Color.CYAN);
 
+        //DISEASES
+     /*   view.setColor(Humans.class,DiseaseEnum.H1N1, new Color(122,95,229));
+        view.setColor(Humans.class,DiseaseEnum.H5N1, new Color(54,43,98));
+        view.setColor(Chicken.class,DiseaseEnum.H5N1, new Color(197,161,0));
+        view.setColor(Pig.class,DiseaseEnum.H1N1, new Color(74,32,73));
+        view.setColor(Duck.class,DiseaseEnum.H5N1, new Color(8,59,0));
+*/
         views.add(view);
-
-        // Setup a valid starting point.
-        // reset();
     }
 
 
 /**
-* @return a random contagious animal
+* @return a random healthy or contagious animal
 */
     public LivingBeing createRandomSickAnimal() {
         Random rand = new Random();
         if (rand.nextDouble() < 0.3) {
-            Pig pig  = new Pig(State.CONTAGIOUS, 0);
+            Pig pig;
+            if(rand.nextDouble() > 0.5){
+                pig = new Pig(State.HEALTHY, 0);
+                return pig;
+            }
+            pig = new Pig(State.CONTAGIOUS, 0);
+            pig.setDisease();
             return pig;
         }
         else if (rand.nextDouble() < 0.6) {
-            Chicken chicken = new Chicken(State.CONTAGIOUS, 0);
+            Chicken chicken;
+            if(rand.nextDouble() > 0.5){
+                chicken = new Chicken(State.HEALTHY, 0);
+                return chicken;
+            }
+            chicken = new Chicken(State.CONTAGIOUS, 0);
+            chicken.setDisease();
             return chicken;
         }
         else {
-            Duck duck = new Duck(State.CONTAGIOUS, 0);
+            Duck duck;
+            if(rand.nextDouble() > 0.5){
+                duck= new Duck(State.HEALTHY, 0);
+                return duck;
+            }
+            duck = new Duck(State.CONTAGIOUS, 0);
+            duck.setDisease();
             return duck;
         }
     }
@@ -131,18 +160,17 @@ public class Simulation{
         field.emptyField();
         for (int j = 0; j < field.getHeight(); j++) {
             for (int i = 0; i < field.getWidth(); i++) {
-                if (rand.nextDouble() <= POPULATION_RATE) {
-                    // create a new person and place it on the field
+                if (rand.nextDouble() <= populationRate) {
+                    // create a new healthy person and place it on the field
                     Random newRandom = new Random();
-
                     if (newRandom.nextDouble() <= 0.5) {
                         Humans person = new Humans();
-                        animals.add(person);
+                        livingBeings.add(person);
                         field.place(person, i, j);
                     }
                     else {
                         LivingBeing animal = createRandomSickAnimal();
-                        animals.add(animal);
+                        livingBeings.add(animal);
                         field.place(animal, i, j);
                     }
                 }
@@ -173,7 +201,7 @@ public class Simulation{
 
 /**
 * reset changeable state of everybody on the field
-* used to change state of LB only once dring one step of simulation
+* used to change state of LB only once during one step of simulation
 */
     public void reset() {
         for (int j = 0; j < field.getHeight(); j++) {
@@ -189,28 +217,80 @@ public class Simulation{
 * @param currentY its current Y position
 * @param adjacentX its future X position
 * @param adjacentY its future Y position
-* @return wether LB was deplaced
+* @return wether LB has moved
 */
     public boolean attemptMove(LivingBeing person, int currentX, int currentY, int adjacentX, int adjacentY){
-        if(indexGood(adjacentX,adjacentY,field) && field.getLivingBeing(adjacentX,adjacentY)==null){
+        if(indexGood(adjacentX, adjacentY, field) && field.getLivingBeing(adjacentX,adjacentY) == null){
             Random r = new Random();
-            if(r.nextDouble()>0.7){
-                System.out.println("Movement");
-                field.remove(currentX,currentY);
-                field.place(person,adjacentX,adjacentY);
+            if(r.nextDouble() > 0.7){
+                field.remove(currentX, currentY);
+                field.place(person, adjacentX, adjacentY);
                 return true;
             }
             return false;
         }
         return false;
-
     }
 
-    /**
+/**
+* check if disease can be transmitted from one LB to another
+* @param sick A sick living being
+* @param neighbour A neighbour of sick LB
+* @return wether disease can be ransmitted
+*/
+    public boolean checkCompatibility(LivingBeing sick, LivingBeing neighbour){
+        if(sick.getDiseaseEnum() == null) return false;
+        if(neighbour.getState() == State.IMUN || neighbour.getState() == State.DEAD) return false; //Si le voisin est immunisé, il ne peut pas être contaminé
+        if(sick.getClass() == neighbour.getClass()) return true; //Si le malade et son voisin sont de meme type, le voisin peut être contaminé
+        if(neighbour.getClass() == Humans.class) return true; //L'humain peut etre contaminé par n'importe quel être contagieux
+
+        //Si c'est un oiseau, il peut contaminer un autre oiseau
+        if(sick.getClass().getSuperclass() == neighbour.getClass().getSuperclass() && sick.getClass().getSuperclass() == Birds.class) return true;
+        return false;
+    }
+
+/**
+* transmit disease 
+* @param sick A sick living being
+* @param neighbourI Neighbour width position
+* @param neighbourJ Neighbour heght posiion
+*/
+    public void affectNeighbour(LivingBeing sick,int neighbourI,int neighbourJ){
+        if (indexGood(neighbourI, neighbourJ, field) && (field.getLivingBeing(neighbourI, neighbourJ) != null)  && field.getLivingBeing(neighbourI, neighbourJ).mayChangeState()) {
+            LivingBeing neighbour = field.getLivingBeing(neighbourI, neighbourJ);
+            if(checkCompatibility(sick, field.getLivingBeing(neighbourI, neighbourJ))) {
+                neighbour.changeState(sick.getDisease());
+                neighbour.setChangeable(false);
+            }
+        }
+    }
+
+/**
+* affect disease to the neighbours
+* @param n Type of neighbourhood (may be 4- or 8-)
+* @param sick a sick living being
+* @param positionX current X position of sick LB
+* @param positionY current Y position of sick LB
+*/ 
+    public void affectNeighbourhood(Neighbourhood n, LivingBeing sick, int positionX, int positionY) {
+        // dans tout le cas affecte les 4 voisins
+        affectNeighbour(sick, positionX + 1, positionY);
+        affectNeighbour(sick, positionX - 1, positionY);
+        affectNeighbour(sick, positionX, positionY - 1);
+        affectNeighbour(sick, positionX, positionY + 1);
+        // affecte encore 4 voisin en diagonale si c'est demande
+        if (n.equals(Neighbourhood.EIGTH_N)) {
+            affectNeighbour(sick, positionX + 1, positionY - 1);
+            affectNeighbour(sick, positionX - 1, positionY - 1);
+            affectNeighbour(sick, positionX + 1, positionY + 1);
+            affectNeighbour(sick, positionX - 1, positionY + 1);
+        }
+    }
+
+/**
 * run one step of simulation
 */
     public void simulateOneStep() {
-        System.out.println("In simulateOneStep");
         step++;
         // reset all LB of the field to change their states only one time
         reset();
@@ -218,43 +298,34 @@ public class Simulation{
         Field tmp = this.field;
         for (int j = 0; j < field.getHeight(); j++) {
             for (int i = 0; i < field.getWidth(); i++) {
+
+                //If a being is dead, he's removed from the field
+                if (tmp.getLivingBeing(i, j) != null && (tmp.getLivingBeing(i, j).isDead())) {
+                    field.remove(i,j);
+                }
                 // si il y a qqn qui est malade et peut transmettre la maladie
                 if ((tmp.getLivingBeing(i, j) != null) && (tmp.getLivingBeing(i, j).getState().equals(State.CONTAGIOUS))) {
-                    // System.out.println("i = " + i + " j = " + j + " is CONTAGIOUS");
-                    // change state of neighbour on the rigth
-                    if (indexGood(i+1, j, field) && (field.getLivingBeing(i+1, j) != null) && field.getLivingBeing(i+1, j).mayChangeState()) {
-                        field.getLivingBeing(i+1, j).changeState();
-                        field.getLivingBeing(i+1, j).setChangeable(false);
-                    }
-                    // change state of neighbour on the left
-                    if (indexGood(i-1, j, field) && (field.getLivingBeing(i-1, j) != null) && field.getLivingBeing(i-1, j).mayChangeState()) {
-                        field.getLivingBeing(i-1, j).changeState();
-                        field.getLivingBeing(i-1, j).setChangeable(false);
-                    }
-                    // change state of neighbour on the top
-                    if (indexGood(i, j-1, field) && (field.getLivingBeing(i, j-1) != null) && field.getLivingBeing(i, j-1).mayChangeState()) {
-                        field.getLivingBeing(i, j-1).changeState();
-                        field.getLivingBeing(i, j-1).setChangeable(false);
-                    }
-                    // change state of neighbour on the bottom
-                    if (indexGood(i, j+1, field) && (field.getLivingBeing(i, j+1) != null) && field.getLivingBeing(i, j+1).mayChangeState()) {
-                        field.getLivingBeing(i, j+1).changeState();
-                        field.getLivingBeing(i, j+1).setChangeable(false);
-                    }
+                    LivingBeing sick = field.getLivingBeing(i,j);
+                    // change state of neighbours
+                    affectNeighbourhood(neighbourhood, sick, i, j);
+                    /*affectNeighbour(sick,i+1,j);
+                    affectNeighbour(sick,i-1,j);
+                    affectNeighbour(sick,i,j-1);
+                    affectNeighbour(sick,i,j+1);*/
                 }
-                // if there is a human and he is not dead, he can deplace on the field
+                // if there is a human and he is not dead, he can move on the field
                 if((field.getLivingBeing(i,j) != null) && field.getLivingBeing(i,j) instanceof Humans && field.getLivingBeing(i,j).getState()!=State.DEAD){
                     LivingBeing movingPerson=field.getLivingBeing(i,j);
-                    boolean moved=false;
-                    if(!moved)moved=attemptMove(movingPerson,i,j,i+1,j);
-                    if(!moved)moved=attemptMove(movingPerson,i,j,i-1,j);
-                    if(!moved)moved=attemptMove(movingPerson,i,j,i,j-1);
-                    if(!moved)attemptMove(movingPerson,i,j,i,j+1);
-
+                    boolean moved;
+                    moved = attemptMove(movingPerson, i, j, i+1, j);
+                    if(!moved) moved = attemptMove(movingPerson, i, j, i-1, j);
+                    if(!moved) moved = attemptMove(movingPerson, i, j, i, j-1);
+                    if(!moved) attemptMove(movingPerson, i, j, i, j+1);
                 }
             }
         }
-    updateViews();
+        addTime();
+        updateViews();
     }
 
     private void updateViews() {
@@ -265,17 +336,38 @@ public class Simulation{
 
 /**
 * run the simulation
-* @throws exception /to specify/
+* @param speed Speed of the simulation in ms
+* @throws  InterruptedException /to specify/
 */
-    public void run() throws InterruptedException {
+    public void run(int speed) throws InterruptedException {
+        if (speed < 1000) {
+            System.out.println("The speed must be greater than 1000 ms.");
+            System.out.println("Using default values.");
+            this.speed = DEFAULT_SPEED;
+        }
+        else this.speed = speed;
         while(!field.areAllDead() || !field.areAllHealthy()) {
             simulateOneStep();
-            System.out.println(field.toString());
+            // System.out.println(field.toString());
             try{
-                Thread.sleep(2000);
-                //this.wait(1000);
+                Thread.sleep(this.speed);
             }catch(Exception e){
                 System.out.println("Probleme");
+            }
+        }
+    }
+
+/**
+* manage time
+*/
+    public void addTime(){
+        for (int j = 0; j<height; j++){
+            for (int i =0; i<width; i++){
+                Field tmp = this.field;
+                if ((tmp.getLivingBeing(i, j) != null) && !(tmp.getLivingBeing(i, j).isHealthy())) {
+                    field.getLivingBeing(i, j).setTime(field.getLivingBeing(i, j).getTime() + 1);
+                    // field.getLivingBeing(i,j).changeState(field.getLivingBeing(i,j).getDisease());
+                }
             }
         }
     }

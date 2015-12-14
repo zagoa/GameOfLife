@@ -38,7 +38,8 @@ public class GridView extends JFrame implements SimulatorView {
      * @param width
      *            The simulation's width.
      */
-    public GridView(int height, int width) {
+    //public GridView(int height, int width) {
+    public GridView(int width, int height) {
         stats = new FieldStats();
         colors = new HashMap<>();
 
@@ -61,23 +62,23 @@ public class GridView extends JFrame implements SimulatorView {
     /**
      * Define a color to be used for a given class of animal.
      * 
-     * @param animalClass
-     *            The animal's Class object.
+     * @param beingClass
+     *            The being's Class object.
      * @param color
      *            The color to be used for the given class.
      */
-    public void setColor(Class animalClass, State state, Color color) {
-    	if(!colors.containsKey(animalClass)){
-            colors.put(animalClass,new HashMap<>());
+    public void setColor(Class beingClass, State state, Color color) {
+    	if(!colors.containsKey(beingClass)){
+            colors.put(beingClass,new HashMap<>());
     	}
-        colors.get(animalClass).put(state,color);
+        colors.get(beingClass).put(state,color);
     }
 
     /**
-     * @return The color to be used for a given class of animal.
+     * @return The color to be used for a given class of being.
      */
-    private Color getColor(Class animalClass, State state) {
-        Color col = colors.get(animalClass).get(state);
+    private Color getColor(Class beingClass, State state) {
+        Color col = colors.get(beingClass).get(state);
         if (col == null) {
             // no color defined for this class
             return UNKNOWN_COLOR;
@@ -106,14 +107,16 @@ public class GridView extends JFrame implements SimulatorView {
 
         for (int row = 0; row < field.getHeight(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
-                // Object animal = field.getObjectAt(row, col);
-                Object animal = field.getObjectAt(col, row);
-                LivingBeing animalLB=(LivingBeing)animal;
-               // System.out.println(animalLB);
-                if (animal != null) {
-                    stats.incrementCount(animal.getClass());
+                // Object being = field.getObjectAt(row, col);
+                Object being = field.getObjectAt(col, row);
+                LivingBeing beingLB=(LivingBeing)being;
+               // System.out.println(beingLB);
+                if (being != null) {
+                    stats.incrementCount(being.getClass());
                     fieldView.drawMark(col, row, Color.BLACK);
-                    fieldView.drawMark(col, row, getColor(animal.getClass(),animalLB.getState()));
+                    fieldView.drawMark(col, row, getColor(being.getClass(),beingLB.getState()));
+                    if(beingLB.getDisease()!=null) fieldView.addText(col, row, beingLB.getType(), beingLB.getDisease().getName());
+                    else fieldView.addText(col, row, beingLB.getType(),DiseaseEnum.NONE);
                 } else {
                     fieldView.drawMark(col, row, EMPTY_COLOR);
                 }
@@ -200,6 +203,28 @@ public class GridView extends JFrame implements SimulatorView {
         public void drawMark(int x, int y, Color color) {
             g.setColor(color);
             g.fillRect(x * xScale, y * yScale, xScale - 1, yScale - 1);
+        }
+
+        public void addText(int x, int y, oop.flu.Type type,DiseaseEnum disease){
+            g.setColor(Color.BLACK);
+            String typeText;
+            String diseaseText;
+            switch(type){
+                case HUMAN: typeText="H";break;
+                case DUCK: typeText="D";break;
+                case CHICKEN: typeText="C";break;
+                case PIG: typeText="P";break;
+                default: typeText="H";break;
+            }
+            switch(disease){
+                case H1N1: diseaseText="H1";break;
+                case H5N1: diseaseText="H5";break;
+                case NONE: diseaseText="OK";break;
+                default: diseaseText="";break;
+            }
+            g.drawString(typeText,x*xScale, y*yScale+10);
+            g.drawString(diseaseText,x*xScale+15, y*yScale+21);
+
         }
 
         /**
