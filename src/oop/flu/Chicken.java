@@ -2,7 +2,7 @@ package oop.flu;
 
 /**
 * A class representing chicken
-* @version 2015.12.13
+* @version 2015.12.07
 */
 public class Chicken extends Birds{
 
@@ -10,10 +10,11 @@ public class Chicken extends Birds{
     * default constructor
     * defaut type CHICKEN
     * @param state its state (healthy, sick, etc.)
-    * @param time
+    * @param time /to specify/
     */
 	public Chicken(State state, int time) {
 		super(Type.CHICKEN, state, time);
+		// TODO Auto-generated constructor stub
 	}
 
     /**
@@ -55,10 +56,6 @@ public class Chicken extends Birds{
         screen = "" + type + " " + state + " " + disease;
         return screen;
 	}
-
-    /**
-    * @return type of a bird (chicken)
-    */
     public Type getType(){
         return Type.CHICKEN;
     }

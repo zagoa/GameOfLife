@@ -4,7 +4,6 @@ package oop.flu;
 * A class describing a field of simulation
 * @version 2015.12.07
 * @author Liavona Zheltanosava
-* @author Arnaud Zago
 */
 public class Field {
 	// The depth and width of the field.
@@ -45,7 +44,7 @@ public class Field {
 */
     public void remove(int width, int height){ field[width][height] = null;}
 
-/**
+    /**
 * @param LB to be placed
 * @param width where to place LB
 * @param height where to place LB
@@ -54,8 +53,6 @@ public class Field {
     	field[width][height] = lb;
     }
 /**
-* @param width X position on the field
-* @param height Y position on the field
 * @return LivingBeing in case [width][height]
 */
     public LivingBeing getLivingBeing(int width, int height) {
@@ -85,10 +82,12 @@ public class Field {
             for (int i = 0; i < this.width; i++){
                 // if there is someone and he is not dead
                 if ((field[i][j] != null) && (!field[i][j].isDead())) {
+                    //System.out.println("World is not dead");
                     return areDead;
                 }
             }
         }
+        //System.out.println("World is dead muahahahaha");
         areDead = true;
         return areDead;
     }
@@ -127,20 +126,10 @@ public class Field {
         return result;
     }
 
-    /**
-    * @return an object on field[row][col]
-    * @param row X position on the field
-    * @param col Y position on the field
-    */
+// TODO : comments
     public Object getObjectAt(int row, int col) {
         return field[row][col];
     }
-
-    /**
-    * @return a Living Being on field[row][col]
-    * @param row X position on the field
-    * @param col Y position on the field
-    */
     public LivingBeing getCreatureAt(int row, int col) {
         return (LivingBeing)field[row][col];
     }

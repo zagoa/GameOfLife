@@ -2,7 +2,7 @@ package oop.flu;
 
 /**
 * A class representing chicken
-* @version 2015.12.13
+* @version 2015.12.07
 */
 public class Duck extends Birds {
 
@@ -14,6 +14,7 @@ public class Duck extends Birds {
     */
 	public Duck(State state, int time) {
 		super(Type.CHICKEN, state, time);
+		// TODO Auto-generated constructor stub
 	}
 
     /**
@@ -56,9 +57,6 @@ public class Duck extends Birds {
         return screen;
 	}
 
-    /** 
-    * @return type of bird (duck) 
-    */
     public Type getType(){
         return Type.DUCK;
     }

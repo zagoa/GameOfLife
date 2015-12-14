@@ -2,7 +2,7 @@ package oop.flu;
 
 /**
 * A class representing common characteristics of birds
-* @version 2015.12.13
+* @version 2015.12.07
 */
 public abstract class Birds extends Animals{
 
@@ -15,13 +15,11 @@ public abstract class Birds extends Animals{
     */
 	public Birds(Type type, State state, int time) {
 		super(type,state, DiseaseEnum.H5N1, time);
+		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	* set a specified (H5N1) virus to a bird
-	*/
 	public void setDisease(){
-		disease = new Disease(DiseaseEnum.H5N1);
+		disease =new Disease(DiseaseEnum.H5N1);
 	}
 
 }

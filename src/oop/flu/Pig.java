@@ -2,9 +2,7 @@ package oop.flu;
 
 /**
 * A class representing a pig
-* @version 2015.12.13
-* @author Baisangour Akhmadov
-* @author Liavona Zheltanosava 
+* @version 2015.12.07
 */
 public class Pig extends Animals{
 
@@ -59,7 +57,7 @@ public class Pig extends Animals{
 	}
 
     public void setDisease(){
-        disease = new Disease(DiseaseEnum.H1N1);
+        disease =new Disease(DiseaseEnum.H1N1);
     }
     public Type getType(){
         return Type.PIG;
