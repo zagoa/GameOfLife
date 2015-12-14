@@ -16,7 +16,7 @@ public class Simulation{
     private static final int DEFAULT_HEIGHT = 25;
     private static final double POPULATION_RATE = 0.5;
     private static final Neighbourhood DEFAULT_NEIGHBOURHOOD = Neighbourhood.FOUR_N;
-    private static final int DEFAULT_SPEED = 2000;
+    private static final int DEFAULT_SPEED = 100;
 
     private int width;
     private int height;
@@ -319,8 +319,8 @@ public class Simulation{
 * @throws  InterruptedException /to specify/
 */
     public void run(int speed) throws InterruptedException {
-        if (speed < 1000) {
-            System.out.println("The dimensions must be greater than zero.");
+        if (speed < DEFAULT_SPEED) {
+            System.out.println("The speed must be > 100.");
             System.out.println("Using default values.");
             this.speed = DEFAULT_SPEED;
         }
@@ -328,7 +328,7 @@ public class Simulation{
         while(!field.isFinish() ) {
             simulateOneStep();
             try{
-                Thread.sleep(speed);
+                Thread.sleep(this.speed);
             }catch(Exception e){
                 System.out.println("Probleme");
             }

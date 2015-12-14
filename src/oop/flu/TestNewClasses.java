@@ -15,7 +15,7 @@ public class TestNewClasses {
         // create a simulation with default parameters
         if (param.equals("o") || param.equals("O")) {
             simul = new Simulation();
-            speed = 2000;
+            speed = 100;
         }
         // user enter his parameters
         else if (param.equals("n") || param.equals("N")) {
