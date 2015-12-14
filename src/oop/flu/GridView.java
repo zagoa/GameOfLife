@@ -114,8 +114,6 @@ public class GridView extends JFrame implements SimulatorView {
                     stats.incrementCount(being.getClass());
                     fieldView.drawMark(col, row, Color.BLACK);
                     fieldView.drawMark(col, row, getColor(being.getClass(),beingLB.getState()));
-                    if(beingLB.getDisease()!=null) fieldView.addText(col, row, beingLB.getType(), beingLB.getDisease().getName());
-                    else fieldView.addText(col, row, beingLB.getType(),DiseaseEnum.NONE);
                 } else {
                     fieldView.drawMark(col, row, EMPTY_COLOR);
                 }
@@ -204,27 +202,6 @@ public class GridView extends JFrame implements SimulatorView {
             g.fillRect(x * xScale, y * yScale, xScale - 1, yScale - 1);
         }
 
-        public void addText(int x, int y, oop.flu.Type type,DiseaseEnum disease){
-            g.setColor(Color.BLACK);
-            String typeText;
-            String diseaseText;
-            switch(type){
-                case HUMAN: typeText="H";break;
-                case DUCK: typeText="D";break;
-                case CHICKEN: typeText="C";break;
-                case PIG: typeText="P";break;
-                default: typeText="H";break;
-            }
-            switch(disease){
-                case H1N1: diseaseText="H1";break;
-                case H5N1: diseaseText="H5";break;
-                case NONE: diseaseText="OK";break;
-                default: diseaseText="";break;
-            }
-            g.drawString(typeText,x*xScale, y*yScale+10);
-            g.drawString(diseaseText,x*xScale+15, y*yScale+21);
-
-        }
 
         /**
          * The field view component needs to be redisplayed. Copy the internal
