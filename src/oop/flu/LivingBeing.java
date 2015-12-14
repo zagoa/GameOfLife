@@ -9,10 +9,7 @@ package oop.flu;
 public class LivingBeing {
     // type of living being
     protected final Type type;
-    // inutile
-//    private State[] allState = {State.HEALTHY, State.SICK, State.CONTAGIOUS, State.RECOVERING, State.DEAD,State.IMUN};
-//    private DiseaseEnum[] allDisease = {DiseaseEnum.NONE, DiseaseEnum.H1N1, DiseaseEnum.H5N1};
-//    private Type[] allType = {Type.HUMAN, Type.PIG, Type.DUCK, Type.CHICKEN};
+
     // state of living being
     protected State stateEnum;
     protected String state;
@@ -22,8 +19,6 @@ public class LivingBeing {
     private int time;
     // wether it is infected
     private boolean infected = false;
-    // ???
-    private boolean isNew = false;
     // wether it is dead
     private boolean dead = false;
     // wether it is healthy
@@ -46,63 +41,6 @@ public class LivingBeing {
         this.time = time;
         this.mayChangeState = true;
     }
-
-    //@Override
-   /* public String toString(){
-        String screen;
-        String type="",state="",desease ="";
-
-        switch (this.type) {
-            case HUMAN:
-                type = "Hu";
-                break;
-            case PIG:
-                type = "Pi";
-                break;
-            case CHICKEN:
-                type = "Ch";
-                break;
-            case DUCK:
-                type = "Du";
-                break;
-        }
-        switch (this.stateEnum) {
-            case SICK:
-                state = "S";
-                break;
-            case HEALTHY:
-                state = "H";
-                break;
-            case CONTAGIOUS:
-                state = "C";
-                break;
-            case RECOVERING:
-                state = "R";
-                break;
-            case DEAD:
-                state = "D";
-                break;
-            case IMUN:
-                state = "I";
-                break;
-        }
-        switch(this.diseaseEnum) {
-            case NONE:
-                desease = "NO";
-                break;
-            case H1N1:
-                desease = "H1";
-                break;
-            case H5N1:
-                desease = "H5";
-                break;
-        }
-
-        screen = ""+type+" "+state+" "+desease;
-        return screen;
-
-    }
-*/
 
 /**
 * @return time
@@ -137,11 +75,9 @@ public class LivingBeing {
 * @param disease a disease to be set
 */
     public void setDisease(Disease disease) {
-        this.disease =disease;
-
-        //this.diseaseEnum = disease;
-        //this.disease=this.diseaseEnum.toString();
+        this.disease = disease;
     }
+
     public void cureDisease(){
         this.disease=null;
     }
@@ -172,16 +108,6 @@ public class LivingBeing {
     }
 
 /**
-* NE SONT PAS UTILISES
-*/
-    public boolean isNew() {
-        return isNew;
-    }
-    public void setNew(boolean aNew) {
-        isNew = aNew;
-    }
-
-/**
 * @return wether LB is dead 
 */
     public boolean isDead() {
@@ -194,7 +120,7 @@ public class LivingBeing {
         return healthy;
     }
 /**
-* kill LB
+* change state of LB to dead
 */
     public void setDead(boolean dead) {
         this.dead = dead;

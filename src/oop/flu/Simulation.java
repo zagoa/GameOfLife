@@ -259,11 +259,33 @@ public class Simulation{
             }
         }
     }
+
+/**
+* affect disease to the neighbours
+* @param n Type of neighbourhood (may be 4- or 8-)
+* @param sick a sick living being
+* @param positionX current X position of sick LB
+* @param positionY current Y position of sick LB
+*/ 
+    public void affectNeighbourhood(Neighbourhood n, LivingBeing sick, int positionX, int positionY) {
+        // dans tout le cas affecte les 4 voisins
+        affectNeighbour(sick, positionX + 1, positionY);
+        affectNeighbour(sick, positionX - 1, positionY);
+        affectNeighbour(sick, positionX, positionY - 1);
+        affectNeighbour(sick, positionX, positionY + 1);
+        // affecte encore 4 voisin en diagonale si c'est demande
+        if (n.equals(Neighbourhood.EIGTH_N)) {
+            affectNeighbour(sick, positionX + 1, positionY - 1);
+            affectNeighbour(sick, positionX - 1, positionY - 1);
+            affectNeighbour(sick, positionX + 1, positionY + 1);
+            affectNeighbour(sick, positionX - 1, positionY + 1);
+        }
+    }
+
     /**
 * run one step of simulation
 */
     public void simulateOneStep() {
-        System.out.println("In simulateOneStep");
         step++;
         // reset all LB of the field to change their states only one time
         reset();
@@ -281,10 +303,11 @@ public class Simulation{
                     LivingBeing sick=field.getLivingBeing(i,j);
                     // System.out.println("i = " + i + " j = " + j + " is CONTAGIOUS");
                     // change state of neighbours
-                    affectNeighbour(sick,i+1,j);
+                    affectNeighbourhood(neighbourhood, sick, i, j);
+/*                    affectNeighbour(sick,i+1,j);
                     affectNeighbour(sick,i-1,j);
                     affectNeighbour(sick,i,j-1);
-                    affectNeighbour(sick,i,j+1);
+                    affectNeighbour(sick,i,j+1);*/
                 }
                 // if there is a human and he is not dead, he can move on the field
                 if((field.getLivingBeing(i,j) != null) && field.getLivingBeing(i,j) instanceof Humans && field.getLivingBeing(i,j).getState()!=State.DEAD){
@@ -321,7 +344,6 @@ public class Simulation{
         else this.speed = speed;
         while(!field.areAllDead() || !field.areAllHealthy()) {
             simulateOneStep();
-            System.out.println(field.toString());
             try{
                 Thread.sleep(speed);
             }catch(Exception e){

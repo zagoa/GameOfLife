@@ -110,7 +110,7 @@ public class Field {
 /**
 * toString method
 */
-    @Override
+/*    @Override
     public String toString() {
         String result = "";
         for (int j = 0; j < this.height; j++) {
@@ -124,7 +124,7 @@ public class Field {
             }
         }
         return result;
-    }
+    }*/
 
 // TODO : comments
     public Object getObjectAt(int row, int col) {
