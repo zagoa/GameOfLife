@@ -16,9 +16,12 @@ public class TestNewClasses {
         System.out.print("Do you want default simulation? o/n: ");  
         param = scan.nextLine();
         Simulation simul;
+
+        int speed = 0;
         // create a simulation with default parameters
         if (param.equals("o") || param.equals("O")) {
             simul = new Simulation();
+            speed = 2000;
         }
         // user enter his parameters
     	else if (param.equals("n") || param.equals("N")) {
@@ -42,6 +45,8 @@ public class TestNewClasses {
                 System.out.println("Using default type.");
                 nb = Neighbourhood.FOUR_N;
             }
+            System.out.print("Enter speed (ms): ");
+            speed = scan.nextInt();
             simul = new Simulation(width, height, poputationRate, nb);
         }
         else {
@@ -53,6 +58,6 @@ public class TestNewClasses {
         System.out.println("height = " + simul.getField().getHeight());
         // fill the field of simul
         simul.fillField(simul.getPopulationRate());
-        simul.run();
+        simul.run(speed);
     }
 }

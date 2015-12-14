@@ -18,12 +18,14 @@ public class Simulation{
     private static final int DEFAULT_HEIGHT = 25;
     private static final double POPULATION_RATE = 0.5;
     private static final Neighbourhood DEFAULT_NEIGHBOURHOOD = Neighbourhood.FOUR_N;
+    private static final int DEFAULT_SPEED = 2000;
 
     private int width;
     private int height;
     private double populationRate;
     private Neighbourhood neighbourhood;
     private Field field;
+    private int speed;
     private List<SimulatorView> views;
     private List<LivingBeing> livingBeings;
     private int step;
@@ -334,14 +336,21 @@ public class Simulation{
 
 /**
 * run the simulation
+* @param speed Speed of the simulation in ms
 * @throws  InterruptedException /to specify/
 */
-    public void run() throws InterruptedException {
+    public void run(int speed) throws InterruptedException {
+        if (speed < 1000) {
+            System.out.println("The speed must be greater than 1000 ms.");
+            System.out.println("Using default values.");
+            this.speed = DEFAULT_SPEED;
+        }
+        else this.speed = speed;
         while(!field.areAllDead() || !field.areAllHealthy()) {
             simulateOneStep();
             // System.out.println(field.toString());
             try{
-                Thread.sleep(2000);
+                Thread.sleep(this.speed);
             }catch(Exception e){
                 System.out.println("Probleme");
             }
