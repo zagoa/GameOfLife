@@ -30,7 +30,6 @@ public abstract class Animals extends LivingBeing {
         if (stateEnum.equals(State.HEALTHY)) {
             setState(State.SICK);
             setDisease(disease);
-            System.out.println("coucou");
         }
         else if (stateEnum.equals(State.SICK) && getTime()>disease.getContagiousTime()) setState(State.CONTAGIOUS);
 
