@@ -16,11 +16,13 @@ public class Simulation{
     private static final int DEFAULT_HEIGHT = 25;
     private static final double POPULATION_RATE = 0.5;
     private static final Neighbourhood DEFAULT_NEIGHBOURHOOD = Neighbourhood.FOUR_N;
+    private static final int DEFAULT_SPEED = 2000;
 
     private int width;
     private int height;
     private double populationRate;
     private Field field;
+    private int speed;
     private List<SimulatorView> views;
     private List<LivingBeing> livingBeings;
     private int step;
@@ -31,7 +33,7 @@ public class Simulation{
 * default constructor
 */
     public Simulation() {
-    	this(DEFAULT_WIDTH, DEFAULT_HEIGHT, POPULATION_RATE);
+    	this(DEFAULT_WIDTH, DEFAULT_HEIGHT, POPULATION_RATE, DEFAULT_NEIGHBOURHOOD);
     }
 /**
 * constructor of simulation
@@ -39,7 +41,7 @@ public class Simulation{
 * @param height Height of the field
 * @param populationRate Percentage of the field to be filled
 */
-    public Simulation (int width, int height, double populationRate) {
+    public Simulation (int width, int height, double populationRate, Neighbourhood n) {
     // si les valeurs sont negatives on les remet par defaut
     	if (width <= 0 || height <= 0) {
             System.out.println("The dimensions must be greater than zero.");
@@ -55,11 +57,11 @@ public class Simulation{
         if (populationRate <= 0) {
             System.out.println("The population rate must be > 0");
             System.out.println("Using default values.");
-            this.populationRate = populationRate;
+            this.populationRate = POPULATION_RATE;
         }
-        else this.populationRate=populationRate;
+        else this.populationRate = populationRate;
 
-
+        neighbourhood = n;
         field = new Field(width, height);
         livingBeings = new ArrayList<>();
         views = new ArrayList<>();
@@ -310,12 +312,18 @@ public class Simulation{
 * un the simulation
 * @throws  InterruptedException /to specify/
 */
-    public void run() throws InterruptedException {
+    public void run(int speed) throws InterruptedException {
+        if (speed < 1000) {
+            System.out.println("The dimensions must be greater than zero.");
+            System.out.println("Using default values.");
+            this.speed = DEFAULT_SPEED;
+        }
+        else this.speed = speed;
         while(!field.areAllDead() || !field.areAllHealthy()) {
             simulateOneStep();
             System.out.println(field.toString());
             try{
-                Thread.sleep(2000);
+                Thread.sleep(speed);
             }catch(Exception e){
                 System.out.println("Probleme");
             }
