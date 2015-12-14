@@ -10,12 +10,15 @@ import java.util.Random;
 * @author Arnaud Zago
 */
 public class Humans extends LivingBeing {
+
+    private static boolean isVaccinated;
     /**
     * default constructor
     * human is healthy
     */
 	public Humans(){
 		super(Type.HUMAN, State.HEALTHY, DiseaseEnum.NONE, 0);
+        this.isVaccinated = false;
 	}
 
     /**
@@ -24,8 +27,9 @@ public class Humans extends LivingBeing {
     * @param disease Current disease
     * @param time
     */
-	public Humans(State state, DiseaseEnum disease, int time){
-		super(Type.HUMAN, state, disease, time);
+	public Humans(boolean isVaccinated){
+		super(Type.HUMAN, State.HEALTHY, DiseaseEnum.NONE, 0);
+        this.isVaccinated = isVaccinated;
 	}
 
     /**
@@ -34,7 +38,7 @@ public class Humans extends LivingBeing {
     */
     @Override
     public void changeState(Disease disease) {
-        if (mayChangeState == false) return;
+        if (mayChangeState == false || isVaccinated == true) return;
         if (stateEnum.equals(State.HEALTHY)) {
             setState(State.SICK);
             setDisease(disease);
@@ -65,6 +69,10 @@ public class Humans extends LivingBeing {
     public void setDisease(Disease disease){
         diseaseEnum=disease.getName();
         this.disease =new Disease(disease.getName());
+    }
+
+    public boolean isVaccinated() {
+        return isVaccinated;
     }
 
 

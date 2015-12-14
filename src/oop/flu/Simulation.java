@@ -161,13 +161,23 @@ public class Simulation{
         for (int j = 0; j < field.getHeight(); j++) {
             for (int i = 0; i < field.getWidth(); i++) {
                 if (rand.nextDouble() <= populationRate) {
-                    // create a new healthy person and place it on the field
+                    // create and place a new healthy person on the field
                     Random newRandom = new Random();
                     if (newRandom.nextDouble() <= 0.5) {
+                        // il y a 10% des personnes vaccinees
+                        Random vaccinate = new Random();
+                        if (vaccinate.nextDouble() <= 0.1) {
+                            Humans person = new Humans(true);
+                            person.setState(State.IMUN);
+                            livingBeings.add(person);
+                            field.place(person, i, j);
+
+                        }
                         Humans person = new Humans();
                         livingBeings.add(person);
                         field.place(person, i, j);
                     }
+                    // create and place a new healthy or sick animal on the field
                     else {
                         LivingBeing animal = createRandomSickAnimal();
                         livingBeings.add(animal);
