@@ -67,7 +67,7 @@ public class Simulation{
         views = new ArrayList<>();
 
         SimulatorView view = new GridView(width, height);
-         //HEALTHY
+        //HEALTHY
         view.setColor(Humans.class,State.HEALTHY, new Color(0,0,255));
         view.setColor(Chicken.class,State.HEALTHY, new Color(255,255,0));
         view.setColor(Duck.class,State.HEALTHY, new Color(0,255,0));
@@ -94,7 +94,7 @@ public class Simulation{
         //IMMUNITY
         view.setColor(Humans.class,State.IMUN, new Color(142,161,255));
 
-        //VACCINA
+        //VACCINATED
         view.setColor(Humans.class,State.VACCINATE, new Color(100,100,100));
         views.add(view);
 
@@ -105,8 +105,13 @@ public class Simulation{
         view.setColor(Duck.class, new Color(0,255,0));
         view.setColor(Pig.class, new Color(255,0,255));
         views.add(view);
+        //The legend
+        Legend leg=new Legend();
+
         // Setup a valid starting point.
-        // reset();
+        reset();
+
+
     }
 
 
