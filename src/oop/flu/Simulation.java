@@ -195,9 +195,6 @@ public class Simulation{
 /**
 * @return the type of neighbourhood
 */
-    public Neighbourhood getNeighbourhood() {
-        return neighbourhood;
-    }
 
 /**
 * reset changeable state of everybody on the field
@@ -241,7 +238,9 @@ public class Simulation{
         if(neighbour.getClass()==Humans.class) return true; //L'humain peut etre contaminé par n'importe quel être contagieux
 
         //Si c'est un oiseau, il peut contaminer un autre oiseau
-        if(sick.getClass().getSuperclass()==neighbour.getClass().getSuperclass() && sick.getClass().getSuperclass()==Birds.class) return true;
+        if(sick.getClass().getSuperclass()==neighbour.getClass().getSuperclass() && sick.getClass().getSuperclass()==Birds.class) {
+            return true;
+        }
         return false;
     }
 
@@ -337,7 +336,7 @@ public class Simulation{
             this.speed = DEFAULT_SPEED;
         }
         else this.speed = speed;
-        while(!field.isFinish() ) {
+        while(!field.isFinished() ) {
             simulateOneStep();
             try{
                 Thread.sleep(this.speed);

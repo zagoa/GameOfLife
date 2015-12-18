@@ -76,7 +76,7 @@ public class Field {
 /**
 * @return wether all LB on the field are dead
 */
-    public boolean isFinish() {
+    public boolean isFinished() {
         this.finish = false;
         for (int j = 0; j < this.height; j++) {
             for (int i = 0; i < this.width; i++){
@@ -87,7 +87,7 @@ public class Field {
             }
         }
         this.finish = true;
-        System.out.println("THAT IS THE END");
+        System.out.println("THIS IS THE END");
         return finish;
     }
 

@@ -7,8 +7,6 @@ import java.util.Random;
 * @author Baisangour Akhmadov
 */
 public abstract class Animals extends LivingBeing {
-	// percentage mortality rate of an animal
-    private static final int MORTALITY_RATE = 42;
     /**
     * default constructor
     * @param type Type of an animal (chiken, duck or pig)
@@ -26,7 +24,7 @@ public abstract class Animals extends LivingBeing {
 
     @Override
     public void changeState(Disease disease) {
-        if (mayChangeState == false) return;
+        if (!mayChangeState) return;
         if (stateEnum.equals(State.HEALTHY)) {
             setState(State.SICK);
             setDisease(disease);
@@ -36,7 +34,6 @@ public abstract class Animals extends LivingBeing {
 
         else if (stateEnum.equals(State.CONTAGIOUS) && getTime()>disease.getRecoveryTime()) {
             // generate a random integer between 0 and 100
-            Random rand = new Random();
             int randomNumber;
             randomNumber = (int) (Math.random() * (100));
             if (randomNumber >= disease.getDeathRate()) {

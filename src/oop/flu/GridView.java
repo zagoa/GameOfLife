@@ -42,13 +42,15 @@ public class GridView extends JFrame implements SimulatorView {
         stats = new FieldStats();
         colors = new HashMap<>();
 
-        setTitle("Fox and Rabbit Simulation");
+        setTitle("Flu Simulation");
         stepLabel = new JLabel(STEP_PREFIX, JLabel.CENTER);
         population = new JLabel(POPULATION_PREFIX, JLabel.CENTER);
 
         setLocation(20, 50);
 
         fieldView = new FieldView(height, width);
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         Container contents = getContentPane();
         contents.add(stepLabel, BorderLayout.NORTH);
@@ -63,6 +65,8 @@ public class GridView extends JFrame implements SimulatorView {
      * 
      * @param beingClass
      *            The being's Class object.
+     * @param state
+     *            The state of the being
      * @param color
      *            The color to be used for the given class.
      */
@@ -72,6 +76,7 @@ public class GridView extends JFrame implements SimulatorView {
     	}
         colors.get(beingClass).put(state,color);
     }
+
     public void setColor(Class beingClass, Color color) {
     }
 

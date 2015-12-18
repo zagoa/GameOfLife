@@ -15,16 +15,7 @@ public class Humans extends LivingBeing {
 		super(Type.HUMAN,State.HEALTHY, DiseaseEnum.NONE, 0);
 	}
 
-    /**
-    * constructor
-    * @param state human's state (healthy, sick, etc.)
-    * @param disease current disease
-    * @param time /to specify/
-    */
-/*	public Humans(State state, DiseaseEnum disease, int time){
-		super(Type.HUMAN,state,disease, time);
-	}
-*/
+
     public Humans(State state) {
         super(Type.HUMAN, state, DiseaseEnum.NONE, 0);
     }
@@ -34,7 +25,7 @@ public class Humans extends LivingBeing {
     */
     @Override
     public void changeState(Disease disease) {
-        if (mayChangeState == false || stateEnum.equals(State.VACCINATE)) return;
+        if (!mayChangeState || stateEnum.equals(State.VACCINATE)) return;
         if (stateEnum.equals(State.HEALTHY)) {
             setState(State.SICK);
             setDisease(disease);
@@ -49,9 +40,8 @@ public class Humans extends LivingBeing {
             Random rand = new Random();
             int randomNumber;
             randomNumber = rand.nextInt(101);
-            // juste pour tester
-            // il faudra le mettre en constante
-            int percentage = 80; //taux de mort de la maladie
+
+
             if (randomNumber >= disease.getDeathRate()) {
                 setState(State.DEAD);
                 setDead(true);
@@ -63,9 +53,12 @@ public class Humans extends LivingBeing {
             }
 
         }
-
-
     }
+
+    /**
+     * Affect a disease to the human
+     * @param disease the disease that we will set
+     */
     public void setDisease(Disease disease){
         diseaseEnum=disease.getName();
         this.disease =new Disease(disease.getName());

@@ -1,7 +1,7 @@
 package oop.flu;
 
 /**
- * Created by Bais on 08/12/2015.
+ * Created by Bais on 08/12/2015
  */
 public class Disease {
     public DiseaseEnum diseaseName;
