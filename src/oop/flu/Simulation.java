@@ -98,6 +98,13 @@ public class Simulation{
         view.setColor(Humans.class,State.VACCINATE, new Color(100,100,100));
         views.add(view);
 
+        //The graph
+        view = new GraphView(500, 150, 500);
+        view.setColor(Humans.class, new Color(0,0,255));
+        view.setColor(Chicken.class, new Color(255,255,0));
+        view.setColor(Duck.class, new Color(0,255,0));
+        view.setColor(Pig.class, new Color(255,0,255));
+        views.add(view);
         // Setup a valid starting point.
         // reset();
     }

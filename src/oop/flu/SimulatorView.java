@@ -13,12 +13,14 @@ public interface SimulatorView {
     /**
      * Define a color to be used for a given class of animal.
      * 
-     * @param animalClass
+     * @param beingClass
      *            The animal's Class object.
      * @param color
      *            The color to be used for the given class.
      */
-    void setColor(Class animalClass, State state, Color color);
+    void setColor(Class beingClass, State state, Color color);
+
+    void setColor(Class beingClass, Color color);
 
     /**
      * Determine whether the simulation should continue to run.
@@ -41,4 +43,6 @@ public interface SimulatorView {
      * Prepare for a new run.
      */
     void reset();
+
+
 }

@@ -72,6 +72,8 @@ public class GridView extends JFrame implements SimulatorView {
     	}
         colors.get(beingClass).put(state,color);
     }
+    public void setColor(Class beingClass, Color color) {
+    }
 
     /**
      * @return The color to be used for a given class of being.
