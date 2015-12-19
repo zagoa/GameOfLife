@@ -12,7 +12,7 @@ public class LivingBeing {
 
     // state of living being
     protected State stateEnum;
-    protected String state;
+   // protected String state;
     // disease of living being
     protected DiseaseEnum diseaseEnum;
     protected Disease disease;
@@ -35,7 +35,7 @@ public class LivingBeing {
     */
     public LivingBeing(Type type, State state, DiseaseEnum disease, int time) {
     	this.stateEnum = state;
-        this.state = state.toString();
+     //   this.state = state.toString();
         this.diseaseEnum = disease;
         this.type = type;
         this.time = time;
@@ -72,16 +72,23 @@ public class LivingBeing {
     }
 
 /**
-* @param disease a disease to be set
+* @param disease the disease that we affect
 */
     public void setDisease(Disease disease) {
         this.disease = disease;
     }
 
+    /**
+     * Removes the disease from the being
+     */
     public void cureDisease(){
         this.disease=null;
     }
 
+    /**
+     *
+     * @return the disease that is affected to the living being
+     */
     public Disease getDisease(){
         return disease;
     }
@@ -93,44 +100,19 @@ public class LivingBeing {
     }
 
 /**
-* @return wether a living being is infected or not
-*/
-    public boolean isInfected() {
-        return infected;
-    }
-
-/**
-* change infection state
-* @param infected a boolean to be set
-*/
-    public void setInfected(boolean infected) {
-        this.infected = infected;
-    }
-
-/**
-* @return wether LB is dead 
-*/
-    public boolean isDead() {
-        return dead;
-    }
-/**
-* @return wether LB is healthy 
-*/  
-    public boolean isHealthy() {
-        return healthy;
-    }
-/**
 * change state of LB to dead
 */
-    public void setDead(boolean dead) {
+  /*  public void setDead(boolean dead) {
         this.dead = dead;
     }
+    */
 /**
 * change state of LB to helthy
 */
-    public void setHealthy(boolean healthy) {
+   /* public void setHealthy(boolean healthy) {
         this.healthy = healthy;
     }
+    */
 /**
 * @return wether LB could change state
 */
@@ -145,5 +127,10 @@ public class LivingBeing {
     }
 
     public void changeState(Disease disease){}
+
+    /**
+     * Method that is redefined in other classes that returns the type of the being
+     * @return the type of the being
+     */
     public Type getType(){return null; }
 }

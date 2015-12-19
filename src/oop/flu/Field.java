@@ -21,18 +21,18 @@ public class Field {
 * @param height height of the field
 * @param width width of the field
 */
-    public Field(int width, int height) {
+    public Field(int height, int width) {
     	this.height = height;
     	this.width = width;
-    	field = new LivingBeing[width][height];
+    	field = new LivingBeing[height][width];
     }
 
 /**
 * empty field
 */
     public void emptyField() {
-    	for (int j = 0; j < height; j++) {
-    		for (int i = 0; i < width; i++) {
+    	for (int i = 0; i < height; i++) {
+    		for (int j = 0; j < width; j++) {
     			field[i][j] = null;
     		}
     	}
@@ -42,21 +42,21 @@ public class Field {
 * @param width where to remove LB from
 * @param height where to remove LB from
 */
-    public void remove(int width, int height){ field[width][height] = null;}
+    public void remove(int height, int width){ field[height][width] = null;}
 
     /**
 * @param lb to be placed
 * @param width where to place LB
 * @param height where to place LB
 */
-    public void place(LivingBeing lb, int width, int height) {
-    	field[width][height] = lb;
+    public void place(LivingBeing lb, int height, int width) {
+    	field[height][width] = lb;
     }
 /**
-* @return LivingBeing in case [width][height]
+* @return LivingBeing in case [height][width]
 */
-    public LivingBeing getLivingBeing(int width, int height) {
-    	return field[width][height];
+    public LivingBeing getLivingBeing(int height, int width) {
+    	return field[height][width];
     }
 
 /**
@@ -78,9 +78,9 @@ public class Field {
 */
     public boolean isFinished() {
         this.finish = false;
-        for (int j = 0; j < this.height; j++) {
-            for (int i = 0; i < this.width; i++){
-                // if there is someone and he is Sick or Contagious
+        for (int i = 0; i < this.height; i++) {
+            for (int j = 0; j < this.width; j++){
+                // if there is someone and he is Sick or Contagious the simulation isn't over yet
                 if ((field[i][j] != null) && ((field[i][j].getState() == State.SICK) || (field[i][j].getState()==State.CONTAGIOUS))) {
                     return finish;
                 }
@@ -115,7 +115,5 @@ public class Field {
     public Object getObjectAt(int row, int col) {
         return field[row][col];
     }
-    public LivingBeing getCreatureAt(int row, int col) {
-        return (LivingBeing)field[row][col];
-    }
+
 }

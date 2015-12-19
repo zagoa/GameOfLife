@@ -62,11 +62,11 @@ public class Simulation{
         else this.populationRate = populationRate;
 
         neighbourhood = n;
-        field = new Field(width, height);
+        field = new Field(height, width);
         livingBeings = new ArrayList<>();
         views = new ArrayList<>();
 
-        SimulatorView view = new GridView(width, height);
+        SimulatorView view = new GridView(height, width);
         //HEALTHY
         view.setColor(Humans.class,State.HEALTHY, new Color(0,0,255));
         view.setColor(Chicken.class,State.HEALTHY, new Color(255,255,0));
@@ -105,6 +105,7 @@ public class Simulation{
         view.setColor(Duck.class, new Color(0,255,0));
         view.setColor(Pig.class, new Color(255,0,255));
         views.add(view);
+
         //The legend
         Legend leg=new Legend();
 
@@ -159,8 +160,8 @@ public class Simulation{
         Random rand = new Random();
         rand.nextDouble();
         field.emptyField();
-        for (int j = 0; j < field.getHeight(); j++) {
-            for (int i = 0; i < field.getWidth(); i++) {
+        for (int i = 0; i < field.getHeight(); i++) {
+            for (int j = 0; j < field.getWidth(); j++) {
                 if (rand.nextDouble() <= populationRate) {
                     // create a new person and place it on the field
                     Random newRandom = new Random();
@@ -206,8 +207,8 @@ public class Simulation{
 * used to change state of LB only once dring one step of simulation
 */
     public void reset() {
-        for (int j = 0; j < field.getHeight(); j++) {
-            for (int i = 0; i < field.getWidth(); i++) {
+        for (int i = 0; i < field.getHeight(); i++) {
+            for (int j = 0; j < field.getWidth(); j++) {
                 if (field.getLivingBeing(i, j) != null) field.getLivingBeing(i, j).setChangeable(true);
             }
         }
@@ -290,8 +291,8 @@ public class Simulation{
         reset();
         // temporary field - a copy of a current field to compare while doing next step
         Field tmp = this.field;
-        for (int j = 0; j < field.getHeight(); j++) {
-            for (int i = 0; i < field.getWidth(); i++) {
+        for (int i = 0; i < field.getHeight(); i++) {
+            for (int j = 0; j < field.getWidth(); j++) {
 
                 //If a being is dead, he's removed from the field
                 if (tmp.getLivingBeing(i, j) != null && (tmp.getLivingBeing(i, j).getState().equals(State.DEAD))){
@@ -353,8 +354,8 @@ public class Simulation{
 
     public void addTime(){
 
-        for (int i = 0; i<width; i++){
-            for (int j =0; j<height; j++){
+        for (int i = 0; i<height; i++){
+            for (int j =0; j<width; j++){
                 Field tmp = this.field;
                 if ((tmp.getLivingBeing(i, j) != null) && !((tmp.getLivingBeing(i, j).getState()).equals(State.HEALTHY))) {
                     field.getLivingBeing(i, j).setTime(field.getLivingBeing(i, j).getTime() + 1);
@@ -368,7 +369,7 @@ public class Simulation{
 * check indexes to avoid NullPointerException while running the simulation
 */
     public boolean indexGood(int i, int j, Field field) {
-        if (0 <= i && i < field.getWidth() && 0 <= j && j < field.getHeight() ) return true;
+        if (0 <= i && i < field.getHeight() && 0 <= j && j < field.getWidth() ) return true;
         return false;
     }
 }

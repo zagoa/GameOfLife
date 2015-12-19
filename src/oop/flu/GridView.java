@@ -114,7 +114,7 @@ public class GridView extends JFrame implements SimulatorView {
         for (int row = 0; row < field.getHeight(); row++) {
             for (int col = 0; col < field.getWidth(); col++) {
                 // Object being = field.getObjectAt(row, col);
-                Object being = field.getObjectAt(col, row);
+                Object being = field.getObjectAt(row, col);
                 LivingBeing beingLB=(LivingBeing)being;
                // System.out.println(beingLB);
                 if (being != null) {

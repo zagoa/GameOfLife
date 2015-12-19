@@ -7,7 +7,7 @@ public class TestNewClasses {
     public static void main(String[] args) throws InterruptedException {
         Scanner scan = new Scanner(System.in);
         String param = "";  
-        System.out.print("Do you want default simulation? o/n: ");  
+        System.out.print("Do you want to launch the default simulation? o/n: ");
         param = scan.nextLine();
         Simulation simul;
 
@@ -44,7 +44,7 @@ public class TestNewClasses {
             simul = new Simulation(width, height, poputationRate, nb);
         }
         else {
-            System.out.println("Yolo, retry plz");
+            System.out.println("Please try again and enter n or o to select the type of simulation");
             return;
         }
         System.out.println("pop rate = " + simul.getPopulationRate());

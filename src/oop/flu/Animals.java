@@ -38,7 +38,7 @@ public abstract class Animals extends LivingBeing {
             randomNumber = (int) (Math.random() * (100));
             if (randomNumber >= disease.getDeathRate()) {
                 setState(State.DEAD);
-                setDead(true);
+              //  setDead(true);
             }
         }
     }

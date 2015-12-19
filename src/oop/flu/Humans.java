@@ -44,12 +44,12 @@ public class Humans extends LivingBeing {
 
             if (randomNumber >= disease.getDeathRate()) {
                 setState(State.DEAD);
-                setDead(true);
+            //    setDead(true);
             }
             else {
                 setState(State.IMUN);
                 cureDisease();
-                setHealthy(true);
+            //    setHealthy(true);
             }
 
         }
