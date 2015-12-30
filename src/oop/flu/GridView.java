@@ -9,8 +9,9 @@ import java.util.Map;
  * A graphical view of the simulation grid. The view displays a colored
  * rectangle for each location representing its contents. Colors for each type
  * of species can be defined using the setColor method.
- * 
+ *
  * @author Michael Kölling and David J. Barnes
+ * @author Akhmadov Baisangour (couleur)
  * @version 2011.07.31
  */
 public class GridView extends JFrame implements SimulatorView {
@@ -26,17 +27,15 @@ public class GridView extends JFrame implements SimulatorView {
     private FieldView fieldView;
 
     // A map for storing colors for participants in the simulation
-    private Map<Class, Map<State,Color>> colors;
+    private Map<Class, Map<State, Color>> colors;
     // A statistics object computing and storing simulation information
     private FieldStats stats;
 
     /**
      * Create a view of the given width and height.
-     * 
-     * @param height
-     *            The simulation's height.
-     * @param width
-     *            The simulation's width.
+     *
+     * @param height The simulation's height.
+     * @param width  The simulation's width.
      */
     public GridView(int height, int width) {
         stats = new FieldStats();
@@ -62,19 +61,16 @@ public class GridView extends JFrame implements SimulatorView {
 
     /**
      * Define a color to be used for a given class of animal.
-     * 
-     * @param beingClass
-     *            The being's Class object.
-     * @param state
-     *            The state of the being
-     * @param color
-     *            The color to be used for the given class.
+     *
+     * @param beingClass The being's Class object.
+     * @param state      The state of the being
+     * @param color      The color to be used for the given class.
      */
     public void setColor(Class beingClass, State state, Color color) {
-    	if(!colors.containsKey(beingClass)){
-            colors.put(beingClass,new HashMap<>());
-    	}
-        colors.get(beingClass).put(state,color);
+        if (!colors.containsKey(beingClass)) {
+            colors.put(beingClass, new HashMap<>());
+        }
+        colors.get(beingClass).put(state, color);
     }
 
     public void setColor(Class beingClass, Color color) {
@@ -95,11 +91,9 @@ public class GridView extends JFrame implements SimulatorView {
 
     /**
      * Show the current status of the field.
-     * 
-     * @param step
-     *            Which iteration step it is.
-     * @param field
-     *            The field whose status is to be displayed.
+     *
+     * @param step  Which iteration step it is.
+     * @param field The field whose status is to be displayed.
      */
     public void showStatus(int step, Field field) {
         if (!isVisible()) {
@@ -115,12 +109,12 @@ public class GridView extends JFrame implements SimulatorView {
             for (int col = 0; col < field.getWidth(); col++) {
                 // Object being = field.getObjectAt(row, col);
                 Object being = field.getObjectAt(row, col);
-                LivingBeing beingLB=(LivingBeing)being;
-               // System.out.println(beingLB);
+                LivingBeing beingLB = (LivingBeing) being;
+                // System.out.println(beingLB);
                 if (being != null) {
                     stats.incrementCount(being.getClass());
                     fieldView.drawMark(col, row, Color.BLACK);
-                    fieldView.drawMark(col, row, getColor(being.getClass(),beingLB.getState()));
+                    fieldView.drawMark(col, row, getColor(being.getClass(), beingLB.getState()));
                 } else {
                     fieldView.drawMark(col, row, EMPTY_COLOR);
                 }
@@ -135,7 +129,7 @@ public class GridView extends JFrame implements SimulatorView {
 
     /**
      * Determine whether the simulation should continue to run.
-     * 
+     *
      * @return true If there is more than one species alive.
      */
     public boolean isViable(Field field) {

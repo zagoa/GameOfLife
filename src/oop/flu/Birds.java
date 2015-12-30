@@ -3,6 +3,7 @@ package oop.flu;
 /**
 * A class representing common characteristics of birds
 * @version 2015.12.07
+ * @author Akhmadov Baisangour
 */
 public abstract class Birds extends Animals{
 

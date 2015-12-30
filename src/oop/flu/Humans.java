@@ -3,17 +3,20 @@ package oop.flu;
 import java.util.Random;
 
 /**
-* A class representing common characteristics of humans
-* @version 2015.12.07
-*/
+ * A class representing common characteristics of humans
+ *
+ * @author Arnaud
+ * @version 2015.12.07
+ *          * @author Liavona
+ */
 public class Humans extends LivingBeing {
     /**
-    * default constructor
-    * human is healthy
-    */
-	public Humans(){
-		super(Type.HUMAN,State.HEALTHY, DiseaseEnum.NONE, 0);
-	}
+     * default constructor
+     * human is healthy
+     */
+    public Humans() {
+        super(Type.HUMAN, State.HEALTHY, DiseaseEnum.NONE, 0);
+    }
 
 
     public Humans(State state) {
@@ -21,20 +24,17 @@ public class Humans extends LivingBeing {
     }
 
     /**
-    * change the current human's state
-    */
+     * change the current human's state
+     */
     @Override
     public void changeState(Disease disease) {
         if (!mayChangeState || stateEnum.equals(State.VACCINATE)) return;
         if (stateEnum.equals(State.HEALTHY)) {
             setState(State.SICK);
             setDisease(disease);
-        }
-
-        else if (stateEnum.equals(State.SICK) && (getTime()>disease.getContagiousTime())) {
+        } else if (stateEnum.equals(State.SICK) && (getTime() > disease.getContagiousTime())) {
             setState(State.CONTAGIOUS);
-        }
-        else if (stateEnum.equals(State.CONTAGIOUS) && (getTime()>disease.getRecoveryTime())) {
+        } else if (stateEnum.equals(State.CONTAGIOUS) && (getTime() > disease.getRecoveryTime())) {
             // TODO : faire un random correct
             // TODO : mettre le pourcentage dans une constante
             Random rand = new Random();
@@ -44,12 +44,11 @@ public class Humans extends LivingBeing {
 
             if (randomNumber >= disease.getDeathRate()) {
                 setState(State.DEAD);
-            //    setDead(true);
-            }
-            else {
+                //    setDead(true);
+            } else {
                 setState(State.IMUN);
                 cureDisease();
-            //    setHealthy(true);
+                //    setHealthy(true);
             }
 
         }
@@ -57,14 +56,15 @@ public class Humans extends LivingBeing {
 
     /**
      * Affect a disease to the human
+     *
      * @param disease the disease that we will set
      */
-    public void setDisease(Disease disease){
-        diseaseEnum=disease.getName();
-        this.disease =new Disease(disease.getName());
+    public void setDisease(Disease disease) {
+        diseaseEnum = disease.getName();
+        this.disease = new Disease(disease.getName());
     }
 
-    public Type getType(){
+    public Type getType() {
         return Type.HUMAN;
     }
 }
